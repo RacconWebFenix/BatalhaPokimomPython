@@ -1,3 +1,4 @@
+import utils
 class Personagem():
     pokemons = []
 
@@ -49,6 +50,30 @@ class Personagem():
                 print('\033[0;31mErro! Digite um número Inteiro Válido.\033[m')
             if ok:
                 break
+        return x
+
+    def escolhaDePokimons(self):
+        pokimonEscolhido = []
+        count = 0
+        print('Escolha um de seus Pokimons.')
+        for v in self.pokemons:
+            count += 1
+            print(f'{count} - Nome: {v.getNome()} HP: {v.getHp()} Ataque: {v.getAtaque()} Defesa: {v.getDefesa()}')
+        ok = False
+        while True:
+            x = str(input('Resposta: '))
+            if x.isnumeric():
+                x = int(x)
+                if x -1 > len(self.pokemons) -1:
+                    print('\033[0;31mErro! Não existe Pokimons para o valor digitado.\033[m')
+                else:
+                    pokimonEscolhido = self.pokemons[x -1]
+                    ok = True
+                    return pokimonEscolhido
+            if ok:
+                break
+            else:
+                print('\033[0;31mErro! Digite um número Inteiro Válido.\033[m')
         return x
 
 

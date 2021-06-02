@@ -7,35 +7,37 @@ class Pokimon:
         self.__ataque = ataque
         self.__defesa = defesa
 
-    def get_nome(self):
+    def getNome(self):
         return self.__nome
 
-    def get_hp(self):
+    def getHp(self):
         return self.__hp
 
-    def get_ataque(self):
+    def getAtaque(self):
         return self.__ataque
 
-    def get_defesa(self):
+    def getDefesa(self):
         return self.__defesa
 
-    def set_nome(self, nome):
+    def setNome(self, nome):
         self.__nome = nome
 
-    def set_hp(self, hp):
+    def setHp(self, hp):
         self.__hp = hp
 
-    def set_ataque(self, ataque):
+    def setAtaque(self, ataque):
         self.__ataque = ataque
 
-    def set_defesa(self, defesa):
+    def setDefesa(self, defesa):
         self.__defesa = defesa
     
     def atacar(self, pokimon):
         dano = self.getAtaque() - random.randint(1, pokimon.getDefesa())
-        resultadoDano = pokimon.getHp() - dano
-        return pokimon.setHp(resultadoDano) 
-
+        return dano
+   
+    def receberDano(self, pokimon, dano):
+        resultado = pokimon.getHp() - dano
+        return pokimon.setHp(resultado)
 
 pikachu = Pokimon('PIKACHU', 50, 15, 5)
 charmander = Pokimon('CHARMANDER', 50, 15, 5)
