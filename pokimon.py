@@ -1,3 +1,5 @@
+import random
+
 class Pokimon:
     def __init__(self, nome, hp, ataque, defesa):
         self.__nome = nome
@@ -28,6 +30,11 @@ class Pokimon:
 
     def set_defesa(self, defesa):
         self.__defesa = defesa
+    
+    def atacar(self, pokimon):
+        dano = self.getAtaque() - random.randint(1, pokimon.getDefesa())
+        resultadoDano = pokimon.getHp() - dano
+        return pokimon.setHp(resultadoDano) 
 
 
 pikachu = Pokimon('PIKACHU', 50, 15, 5)
