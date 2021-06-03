@@ -88,14 +88,18 @@ def resultadoDeBatalha(pokimonEscolhido, pokimonEncontrado, personagem):
 
 
 def instanciaDePokimons():
-    pikachu = Pokimon('PIKACHU', 50, 15, 5)
-    staryu = Pokimon('STARYU', 50, 15, 5)
-    charmander = Pokimon('CHARMANDER', 50, 15, 5)
-    bulbasaur = Pokimon('BULBASAUR', 50, 15, 5)
-    gyarados = Pokimon('GYARADOS', 50, 15, 5)
-    lapras = Pokimon('LAPRAS', 50, 15, 5)
+    pikachu = Pokimon('PIKACHU', 50, 17, 7, pokimon.imgPikachu)
+    charmander = Pokimon('CHARMANDER', 50, 20, 7, pokimon.imgCharmander)
+    bulbasaur = Pokimon('BULBASAUR', 50, 15, 5, pokimon.imgBulbasaur)
+    staryu = Pokimon('STARYU', 55, 16, 6, pokimon.imgStaryu)
+    snorlax = Pokimon('SNORLAX', 70, 10, 7, pokimon.imgSnorlax)
+    starly = Pokimon('STARLY', 50, 14, 5, pokimon.imgStarly)
+    eevee = Pokimon('EEVEE', 56, 13, 6, pokimon.imgEevee)
+    pidgeotto = Pokimon('PIDGEOTTO', 55, 16, 6, pokimon.imgPidgeotto)
+    zubat = Pokimon('ZUBAT', 50, 15, 5, pokimon.imgZubat)
+    chicorita = Pokimon('CHICORITA', 55, 17, 4, pokimon.imgChicorita)
     pokimonAleatorioSelvagem = [
-        pikachu, staryu, charmander, bulbasaur, gyarados, lapras
+        pikachu, staryu, charmander, bulbasaur, chicorita, zubat, pidgeotto, eevee, starly, snorlax
     ]
     return pokimonAleatorioSelvagem
 

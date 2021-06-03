@@ -1,5 +1,3 @@
-import time
-import utils
 class Personagem():
     pokemons = []
 
@@ -80,3 +78,5 @@ class Personagem():
 
 ash = Personagem('ASH', 3, 100, 100)
 misty = Personagem('MISTY', 3, 100, 100)
+
+

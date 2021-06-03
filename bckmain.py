@@ -5,45 +5,16 @@ from treinamento import PokimonTreinado
 import utils
 import time
 '''import pygame'''
-'''import ascii
-
-#Agradecimento especial
-url7 = 'https://media-exp1.licdn.com/dms/image/C5603AQHCwoSDIiHTvg/profile-displayphoto-shrink_800_800/0/1618974047796?e=1628121600&v=beta&t=3a-Iu0M4bliPUwRMKWL62FQ84ZWlRtHe0sDnbgWc45E'
-
-output7 = ascii.loadFromUrl(url7)
-
-#POKEBOLA
-url1 = 'https://1.bp.blogspot.com/_KBmmkCxTLY8/TMBfCU6xtBI/AAAAAAAAAFI/Ia5W4Suucww/s1600/kawax-pokeball-3097.png'
-output1 = ascii.loadFromUrl(url1)
-
-#ASH
-url2 = 'https://i.pinimg.com/originals/8f/0c/42/8f0c42e4b5ffd76f3863950582070c1c.png'
-output2 = ascii.loadFromUrl(url2)
-
-#MYSTI
-url3 = 'https://static.wikia.nocookie.net/pocketmonster/images/f/f0/Misty.png/revision/latest?cb=20160607230147&path-prefix=pt-br'
-output3 = ascii.loadFromUrl(url3)
-#Condição de Vitória
-url4 = 'https://www.acasadocogumelo.com/wp-content/uploads/2015/02/happy_pokemon.png'
-output4 = ascii.loadFromUrl(url4)
-
-#Participação especial
-url5 = 'https://avatars.githubusercontent.com/u/70485830?v=4'
-output5 = ascii.loadFromUrl(url5)
-
-#Condição de Derrota
-url6 = 'https://www.criatives.com.br/wp-content/uploads/2012/01/3227198501_8315360dde_o.jpeg'
-
-output6 = ascii.loadFromUrl(url6)
-''' '''
+'''
 pygame.init()
 pygame.mixer.music.load('inicio.ogg')
 pygame.mixer.music.play()
-pygame.event.wait()'''
+pygame.event.wait()0
+'''
+
 
 pokimonAleatorioSelvagem = utils.instanciaDePokimons()
 pokimonsPersonagem = utils.instanciaDePokimons()
-
 
 #Valores dos laços While
 #inicio do game 0
@@ -58,8 +29,8 @@ inicioGame = 0
 while inicioGame == 0:
     ash = Personagem('ASH', 3, 100, 100)
     misty = Personagem('MISTY', 3, 100, 100)
-    #ash.adicionar_pokemon(pokimonsPersonagem[0])
-    #misty.adicionar_pokemon(pokimonsPersonagem[1])
+    ash.adicionar_pokemon(pokimonsPersonagem[0])
+    misty.adicionar_pokemon(pokimonsPersonagem[1])
     print('Carregando jogo...')
     utils.clear_screen()
     print('Bem - vindo ao jogo de captura de pokimons')
@@ -114,6 +85,7 @@ while inicioGame == 0:
                 print(
                     f'Nome: {v.getNome()} HP: {v.getHp()} Ataque: {v.getAtaque()} Defesa: {v.getDefesa()}'
                 )
+            personagem.pokemons[0].getImg()
             print('Escolha uma opção:')
             print('1 - Procurar pokimon (Custo: 25 Estamina)')
             print('2 - Treinar pokimon (Custo: 50 Dinheiro)')
