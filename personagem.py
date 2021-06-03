@@ -1,3 +1,4 @@
+import time
 import utils
 class Personagem():
     pokemons = []

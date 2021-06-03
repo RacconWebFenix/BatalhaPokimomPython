@@ -1,5 +1,5 @@
 import random
-
+import utils
 
 
 class Personagem():
@@ -23,7 +23,7 @@ class Personagem():
 
     def getEstamina(self):
         return self.__Estamina
-    
+
     def setNome(self, nome):
         self.__Nome = nome
 
@@ -42,20 +42,7 @@ class Personagem():
     def remover_pokemon(self, pokemon):
         self.pokemons.remove(pokemon)
 
-    def resposta(self):
-        ok = False
-        while True:
-            x = str(input('Resposta: '))
-            if x.isnumeric():
-                x = int(x)
-                ok = True
-            else:
-                print('\033[0;31mErro! Digite um número Inteiro Válido.\033[m')
-            if ok:
-                break
-        return x
-
-
+    
 
 
 ash = Personagem('ASH', 3, 100, 100)
