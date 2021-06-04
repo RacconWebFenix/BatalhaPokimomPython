@@ -5,6 +5,7 @@ import funcionalidades
 import time
 import pygame
 pygame.init()
+pygame.mixer.init()
 pygame.mixer.music.load('./audios/inicio.ogg')
 pygame.mixer.music.play(-1)
 pygame.event.wait()
@@ -42,6 +43,11 @@ while inicioGame == 0:
         personagem = ash
         print(f'Você escolheu o {personagem.getNome()}')
         personagem.getImg()
+        time.sleep(3)
+        funcionalidades.clear_screen()
+        print(f'{personagem.getNome()} começa com o Pokimom {personagem.pokemons[0].getNome()}')
+        personagem.pokemons[0].getImg()
+        personagem.pokemons[0].getSom().play(1)
         print('Localizando pokimons...')
         time.sleep(3)
         inicioGame = 1
@@ -50,6 +56,11 @@ while inicioGame == 0:
         personagem = misty
         print(f'Você escolheu a {personagem.getNome()}')
         personagem.getImg()
+        time.sleep(3)
+        funcionalidades.clear_screen()
+        print(f'{personagem.getNome()} começa com o Pokimom {personagem.pokemons[0].getNome()}')
+        personagem.pokemons[0].getImg()
+        personagem.pokemons[0].getSom().play(1)
         print('Localizando pokimons...')
         time.sleep(3)
         inicioGame = 1
@@ -188,9 +199,12 @@ while inicioGame == 0:
                             while lutando == 0:
                                 lutando = 0
                                 funcionalidades.clear_screen()
+
                                 print(
                                     f'{personagem.getNome()} busca por Pokimons, ao se deparar com um {pokimon_encontrado.getNome()} selvagem, \033[1;31m{funcionalidades.reacaoDosPokimons()}\033[m e vai em sua direção.\n'
                                 )
+                                pokimon_encontrado.getImg()
+                                pokimon_encontrado.getSom().play(1)
                                 print(
                                     'O que você deseja fazer?\n\033[0;31m1 - Atacar\033[m\n\033[0;92m2 - Correr\n\033[m'
                                 )
@@ -394,6 +408,7 @@ while inicioGame == 0:
                     f'Nome: {pokimomEscolhido.getNome()} HP: {pokimomEscolhido.getHp()} Ataque: {pokimomEscolhido.getAtaque()} Defesa: {pokimomEscolhido.getDefesa()}'
                 )
                 pokimomEscolhido.getImg()
+                pokimomEscolhido.getSom().play(1)
                 time.sleep(5)
                 break
             time.sleep(2)

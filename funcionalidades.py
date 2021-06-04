@@ -5,11 +5,7 @@ import personagem
 import pokimon
 import random
 import time
-
 hpGlobalPkl1 = 50
-hpGlobalPkl2 = 70
-
-
 def listaPokimons(personagem):
     count = 0
     for v in personagem.pokemons:
@@ -88,16 +84,16 @@ def resultadoDeBatalha(pokimonEscolhido, pokimonEncontrado, personagem):
 
 
 def instanciaDePokimons():
-    pikachu = Pokimon('PIKACHU', 50, 17, 7, pokimon.imgPikachu)
-    charmander = Pokimon('CHARMANDER', 50, 20, 7, pokimon.imgCharmander)
-    bulbasaur = Pokimon('BULBASAUR', 50, 15, 5, pokimon.imgBulbasaur)
-    staryu = Pokimon('STARYU', 55, 16, 6, pokimon.imgStaryu)
-    snorlax = Pokimon('SNORLAX', 70, 10, 7, pokimon.imgSnorlax)
-    starly = Pokimon('STARLY', 50, 14, 5, pokimon.imgStarly)
-    eevee = Pokimon('EEVEE', 56, 13, 6, pokimon.imgEevee)
-    pidgeotto = Pokimon('PIDGEOTTO', 55, 16, 6, pokimon.imgPidgeotto)
-    zubat = Pokimon('ZUBAT', 50, 15, 5, pokimon.imgZubat)
-    chicorita = Pokimon('CHICORITA', 55, 17, 4, pokimon.imgChicorita)
+    pikachu = Pokimon('PIKACHU', 50, 17, 7, pokimon.imgPikachu,pokimon.pikachuSom )
+    charmander = Pokimon('CHARMANDER', 50, 20, 7, pokimon.imgCharmander, pokimon.charmanderSom)
+    bulbasaur = Pokimon('BULBASAUR', 50, 15, 5, pokimon.imgBulbasaur, pokimon.bulbasaurSom)
+    staryu = Pokimon('STARYU', 55, 16, 6, pokimon.imgStaryu, pokimon.staryuSom)
+    snorlax = Pokimon('SNORLAX', 70, 10, 7, pokimon.imgSnorlax, pokimon.snorlaxSom)
+    starly = Pokimon('STARLY', 50, 14, 5, pokimon.imgStarly, pokimon.starlySom)
+    eevee = Pokimon('EEVEE', 56, 13, 6, pokimon.imgEevee, pokimon.eeveeSom)
+    pidgeotto = Pokimon('PIDGEOTTO', 55, 16, 6, pokimon.imgPidgeotto, pokimon.pidgeotSom)
+    zubat = Pokimon('ZUBAT', 50, 15, 5, pokimon.imgZubat, pokimon.zubatSom)
+    chicorita = Pokimon('CHICORITA', 55, 17, 4, pokimon.imgChicorita, pokimon.chikoritaSom)
     pokimonAleatorioSelvagem = [
         pikachu, staryu, charmander, bulbasaur, chicorita, zubat, pidgeotto, eevee, starly, snorlax
     ]
@@ -106,7 +102,7 @@ def instanciaDePokimons():
 
 def instanciaDePersonagens():
     ash = Personagem('ASH', 3, 400, 450, personagem.imgAsh)
-    misty = Personagem('MISTY', 3, 900, 400, personagem.imgMisy)
+    misty = Personagem('MISTY', 3, 450, 400, personagem.imgMisy)
     personagens = [ash, misty]
     return personagens
 

@@ -1,16 +1,17 @@
 import random
 import funcImagens
-
+import funcSonsPokimons
 
 
 
 class Pokimon:
-    def __init__(self, nome, hp, ataque, defesa, img):
+    def __init__(self, nome, hp, ataque, defesa, img, som):
         self.__nome = nome
         self.__hp = hp
         self.__ataque = ataque
         self.__defesa = defesa
         self.__img = img
+        self.__som = som
 
     def getNome(self):
         return self.__nome
@@ -26,6 +27,9 @@ class Pokimon:
     
     def getImg(self):
         return self.__img()
+    
+    def getSom(self):
+        return self.__som
 
     def setNome(self, nome):
         self.__nome = nome
@@ -41,6 +45,9 @@ class Pokimon:
     
     def setImg(self, img):
         self.__img = img()
+    
+    def setImg(self, som):
+        self.__som = som
     
     def atacar(self, pokimon):
         dano = self.getAtaque() - random.randint(1, pokimon.getDefesa())
@@ -62,6 +69,17 @@ imgEevee = funcImagens.imgPrintEevee
 imgPidgeotto = funcImagens.imgPrintPidgeotto
 imgZubat = funcImagens.imgPrintZubat
 imgChicorita = funcImagens.imgPrintChicorita
+
+bulbasaurSom = funcSonsPokimons.bulbasaurSom 
+charmanderSom = funcSonsPokimons.charmanderSom 
+chikoritaSom = funcSonsPokimons.chikoritaSom
+eeveeSom = funcSonsPokimons.eeveeSom 
+pidgeotSom = funcSonsPokimons.pidgeotSom 
+pikachuSom = funcSonsPokimons.pikachuSom 
+snorlaxSom = funcSonsPokimons.snorlaxSom 
+starlySom = funcSonsPokimons.starlySom 
+staryuSom = funcSonsPokimons.staryuSom 
+zubatSom = funcSonsPokimons.zubatSom
 
 '''
 
