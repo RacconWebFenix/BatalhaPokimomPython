@@ -4,7 +4,6 @@ import os, sys
 import personagem
 import pokimon
 import random
-import utils
 import time
 
 hpGlobalPkl1 = 50
@@ -62,7 +61,7 @@ def resultadoDeBatalha(pokimonEscolhido, pokimonEncontrado, personagem):
         personagem.setDinheiro(x)
         pokimonEncontrado.setHp(hpGlobalPkl1)
         time.sleep(4)
-        utils.clear_screen()
+        clear_screen()
         personagem.adicionar_pokemon(pokimonEncontrado)
         print(
             f'{personagem.getNome()} ganhou 25 de dinheiro e o Pokimon {pokimonEncontrado.getNome()}'
@@ -80,7 +79,7 @@ def resultadoDeBatalha(pokimonEscolhido, pokimonEncontrado, personagem):
         )
         pokimonEscolhido.setHp(1)
         time.sleep(3)
-        utils.clear_screen()
+        clear_screen()
         resultado = 3
         return resultado
     else:
@@ -107,7 +106,7 @@ def instanciaDePokimons():
 
 def instanciaDePersonagens():
     ash = Personagem('ASH', 3, 400, 450, personagem.imgAsh)
-    misty = Personagem('MISTY', 3, 450, 400, personagem.imgMisy)
+    misty = Personagem('MISTY', 3, 900, 400, personagem.imgMisy)
     personagens = [ash, misty]
     return personagens
 
@@ -115,12 +114,16 @@ def instanciaDePersonagens():
 
 def condicaoVitoriaDerrota(personagem):
     if personagem.getVida() <= 0:
+        #print('Derrota')
         return 0
     elif len(personagem.pokemons) <= 0 and personagem.getDinheiro() < 1:
+        #print('Derrota')
         return 1
     elif len(personagem.pokemons) >= 5:
+        #print('Vitoria')
         return 2
     else:
+        #print('Continue')
         return 3
 
 
@@ -131,4 +134,13 @@ def descansar(pokimonEscolhido, pokimonDescansado, personagem):
     else:
         return 'Pokimon não encontrado'
     
-    
+
+def comprarListaPokimons(pokimons):
+    count = 0
+    for v in pokimons:
+        count += 1
+        print(
+            f'{count} - Nome: {v.getNome()} HP: {v.getHp()} Ataque: {v.getAtaque()} Defesa: {v.getDefesa()}'
+        )
+    return pokimons
+
