@@ -3,13 +3,12 @@ import random
 from personagem import Personagem
 import funcionalidades
 import time
-'''import pygame'''
-'''
+import pygame
 pygame.init()
-pygame.mixer.music.load('inicio.ogg')
-pygame.mixer.music.play()
-pygame.event.wait()0
-'''
+pygame.mixer.music.load('./audios/inicio.ogg')
+pygame.mixer.music.play(-1)
+pygame.event.wait()
+
 
 pokimonAleatorioSelvagem = funcionalidades.instanciaDePokimons()
 pokimonsPersonagem = funcionalidades.instanciaDePokimons()

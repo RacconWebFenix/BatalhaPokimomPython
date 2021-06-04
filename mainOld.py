@@ -2,7 +2,6 @@ import random
 from personagem import Personagem
 from pokimon import Pokimon
 from treinamento import PokimonTreinado
-import utils
 import time
 import pygame
 import ascii
