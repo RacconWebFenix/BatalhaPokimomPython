@@ -61,6 +61,7 @@ while inicioGame == 0:
             print(
                 '!!!!!!!!!!!!!!!!Você conseguiu capturar 3 pokimons!!!!!!!!!!!!!'
             )
+<<<<<<< HEAD
             break
         elif len(personagem.pokemons) < 1 and personagem.getVida() <= 0 or len(
                 personagem.pokemons) < 1 and personagem.getEstamina(
@@ -80,6 +81,17 @@ while inicioGame == 0:
         )
         print('POKIMON:')
         for v in personagem.pokemons:
+=======
+            print('POKIMON:')
+            for v in personagem.pokemons:
+                print(
+                    f'Nome: {v.getNome()} HP: {v.getHp()} Ataque: {v.getAtaque()} Defesa: {v.getDefesa()}'
+                )
+            personagem.pokemons[0].getImg()
+            print('Escolha uma opção:')
+            print('1 - Procurar pokimon (Custo: 25 Estamina)')
+            print('2 - Treinar pokimon (Custo: 50 Dinheiro)')
+>>>>>>> b9fa4b308c3edc5a1f701d79a2a75c4ec51d6e22
             print(
                 f'Nome: {v.getNome()} HP: {v.getHp()} Ataque: {v.getAtaque()} Defesa: {v.getDefesa()}'
             )
