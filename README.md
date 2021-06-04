@@ -4,8 +4,10 @@
 
 ## Estruturado em Classes, Encapsulamento, Polimorfismo, Listas, Dicionários, Condicionais e Loops. 
 
-##Em desemvilvimento....
+##!!!DEMO JOGAVEL!!!
+
+Versão BETA
 
 ## Para testes rodar o arquivo main.py
-## Instalar os modulos ascci e pygame
+## Instalar os modulos ascii_magic e pygame pra som e imagens
 
