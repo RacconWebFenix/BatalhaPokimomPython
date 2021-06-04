@@ -93,18 +93,3 @@ def imgPrintStaryu():
 def imgPrintZubat():
     ascii_magic.to_terminal(imagePathZubat)
 
-<<<<<<< HEAD
-=======
-
-
-"""
-imgPrintPokebola()
-imgPrintAsh()
-imgPrintCoracao()
-imgPrintDuda()
-imgPrintDerrota()
-imgPrintGustavo()
-imgPrintMisty()
-imgPrintVitoria()
-"""
->>>>>>> b9fa4b308c3edc5a1f701d79a2a75c4ec51d6e22

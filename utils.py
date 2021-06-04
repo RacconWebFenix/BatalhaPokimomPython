@@ -1,4 +1,5 @@
 from pokimon import Pokimon
+from personagem import Personagem
 import os, sys
 import personagem
 import pokimon
@@ -102,6 +103,14 @@ def instanciaDePokimons():
         pikachu, staryu, charmander, bulbasaur, chicorita, zubat, pidgeotto, eevee, starly, snorlax
     ]
     return pokimonAleatorioSelvagem
+
+
+def instanciaDePersonagens():
+    ash = Personagem('ASH', 3, 400, 450, personagem.imgAsh)
+    misty = Personagem('MISTY', 3, 450, 400, personagem.imgMisy)
+    personagens = [ash, misty]
+    return personagens
+
 
 
 def condicaoVitoriaDerrota(personagem):
