@@ -113,3 +113,13 @@ def condicaoVitoriaDerrota(personagem):
         return 2
     else:
         return 3
+
+
+def descansar(pokimonEscolhido, pokimonDescansado, personagem):
+    if pokimonDescansado.getNome() == pokimonEscolhido.getNome():
+        personagem.remover_pokemon(pokimonEscolhido)
+        personagem.adicionar_pokemon(pokimonDescansado)
+    else:
+        return 'Pokimon não encontrado'
+    
+    

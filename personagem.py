@@ -76,7 +76,7 @@ class Personagem():
         return x
 
 
-ash = Personagem('ASH', 3, 100, 100)
-misty = Personagem('MISTY', 3, 100, 100)
+ash = Personagem('ASH', 3, 400, 450)
+misty = Personagem('MISTY', 3, 450, 400)
 
 
