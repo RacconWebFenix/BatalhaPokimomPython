@@ -1,5 +1,4 @@
 import pygame.mixer
-import time
 pygame.mixer.init()
 
 bulbasaurSom = pygame.mixer.Sound('./audios/bulbasaur.ogg' )
@@ -12,45 +11,3 @@ snorlaxSom = pygame.mixer.Sound('./audios/snorlax.ogg' )
 starlySom = pygame.mixer.Sound('./audios/starly.ogg' )
 staryuSom = pygame.mixer.Sound('./audios/staryu.ogg' )
 zubatSom = pygame.mixer.Sound('./audios/zubat.ogg' )
-
-snorlaxSom.play(1)
-time.sleep(2)
-
-
-'''
-def bulbasaurSom():
-    pygame.mixer.init()
-    pygame.mixer.music.load('./audios/bulbasaur.ogg' )
-    pygame.mixer.music.play()
-    time.sleep(2)
-
-def charmanderSom():
-    pygame.mixer.init()
-    pygame.mixer.music.load('./audios/charmander.ogg' )
-    pygame.mixer.music.play()
-    time.sleep(2)
-
-def charmanderSom():
-    pygame.mixer.init()
-    pygame.mixer.music.load('./audios/charmander.ogg' )
-    pygame.mixer.music.play()
-    time.sleep(2)
-
-def charmanderSom():
-    pygame.mixer.init()
-    pygame.mixer.music.load('./audios/charmander.ogg' )
-    pygame.mixer.music.play()
-    time.sleep(2)
-
-def charmanderSom():
-    pygame.mixer.init()
-    pygame.mixer.music.load('./audios/charmander.ogg' )
-    pygame.mixer.music.play()
-    time.sleep(2)
-
-def charmanderSom():
-    pygame.mixer.init()
-    pygame.mixer.music.load('./audios/charmander.ogg' )
-    pygame.mixer.music.play()
-    time.sleep(2)'''
-

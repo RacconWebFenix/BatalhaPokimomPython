@@ -5,7 +5,7 @@ import personagem
 import pokimon
 import random
 import time
-hpGlobalPkl1 = 50
+hpGlobalPkl1 = 1
 def listaPokimons(personagem):
     count = 0
     for v in personagem.pokemons:

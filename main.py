@@ -1,9 +1,9 @@
-from os import utime
 import random
 from personagem import Personagem
 import funcionalidades
 import time
 import pygame
+import funcImagens
 pygame.init()
 pygame.mixer.init()
 pygame.mixer.music.load('./audios/inicio.ogg')
@@ -33,6 +33,7 @@ while inicioGame == 0:
     print('Carregando jogo...')
     funcionalidades.clear_screen()
     print('Bem - vindo ao jogo de captura de pokimons')
+    print(funcImagens.imagePathPokebola)
     print('Instruções de jogo.')
     print('Durante a procura de pokinons')
     print('Por favor selecione seu personagem:\n1 - ASH\n2 - MISTY\n ')
@@ -73,6 +74,7 @@ while inicioGame == 0:
         condicaoDeVitoriaDerrota = funcionalidades.condicaoVitoriaDerrota(personagem)
         if condicaoDeVitoriaDerrota == 0:
             print('Você perdeu todos os seus pontos de vida.')
+            print(funcImagens.imagePathDerrota)
             print('Deseja Reiniciar o jogo?')
             print('1 - Sim\n2 - Não')
             resp = personagem.resposta()
@@ -115,6 +117,7 @@ while inicioGame == 0:
                 time.sleep(2)    
         elif condicaoDeVitoriaDerrota == 2:
             print('Parabéns. Você conquistou os pokimons necessarios')
+            print(funcImagens.imagePathVitoria)
             print('Deseja Reiniciar o jogo?')
             print('1 - Sim\n2 - Não')
             resp = personagem.resposta()
@@ -251,7 +254,7 @@ while inicioGame == 0:
                                                 f'Status do Pokimon do personagem {personagem.getNome()} - Nome: {pokimonEscolhido.getNome()} HP: {pokimonEscolhido.getHp()} Ataque: {pokimonEscolhido.getAtaque()} Defesa: {pokimonEscolhido.getDefesa()}'
                                             )
                                             print(
-                                                f'Status do Pokimon encontrado - Nome: {pokimonEncontrado.getNome()} HP: {pokimonEncontrado.getHp()} Ataque: {pokimonEncontrado.getAtaque()} Defesa: {pokimonEncontrado.getDefesa()}'
+                                                f'Status do Pokimon selvagem - Nome: {pokimonEncontrado.getNome()} HP: {pokimonEncontrado.getHp()} Ataque: {pokimonEncontrado.getAtaque()} Defesa: {pokimonEncontrado.getDefesa()}'
                                             )
                                             print(
                                                 f'O Pokimon {pokimonEncontrado.getNome()} {funcionalidades.reacaoDosPokimons()}'
@@ -413,14 +416,26 @@ while inicioGame == 0:
                 break
             time.sleep(2)
         elif x == 6:
-            print(
-                'Para ver a participação especial seu personagem deve possuir ao menos 3 Pokimons'
-            )
+            if len(personagem.pokemons) >= 3:
+                funcionalidades.clear_screen()
+                print(funcImagens.imagePathGustavo)
+                time.sleep(3)
+            else:
+                print(
+                    'Para ver a participação especial seu personagem deve possuir ao menos 3 Pokimons'
+                )
             time.sleep(2)
         elif x == 7:
-            print(
-                'Para ver os agradecimentos especiais seu personagem deve possuir ao menos 4 Pokimons'
-            )
+            if len(personagem.pokemons) >= 4:
+                funcionalidades.clear_screen()
+                print(funcImagens.imagePathDuda)
+                print()
+                print(funcImagens.imagePathCoracao)
+                time.sleep(3)
+            else:
+                print(
+                    'Para ver os agradecimentos especiais seu personagem deve possuir ao menos 4 Pokimons'
+                )
             time.sleep(2)
         elif x == 8:
             telaVoltarMenuPersonagem = 0
