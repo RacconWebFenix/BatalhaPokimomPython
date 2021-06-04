@@ -12,14 +12,22 @@ Versão BETA
 
 ## Instalar os modulos ascii_magic e pygame pra som e imagens
 
-#ascii_magic
-##Debian/Ubuntu
+# ascii_magic
+
+## Debian/Ubuntu
+
 sudo apt-get install libmagic1
-##Windows
+
+## Windows
+
 pip install python-magic-bin
 
-#ascii_magic
-##Debian/Ubuntu
+# ascii_magic
+
+## Debian/Ubuntu
+
 sudo apt-get install pygame
-##Windows
+
+## Windows
+
 pip install python-pygame
