@@ -1,12 +1,13 @@
-import utils
+import funcImagens
 class Personagem():
     pokemons = []
 
-    def __init__(self, nome, vida, dinheiro, estamina):
+    def __init__(self, nome, vida, dinheiro, estamina, img):
         self.__Nome = nome
         self.__Vida = vida
         self.__Dinheiro = dinheiro
         self.__Estamina = estamina
+        self.__img = img
         self.pokemons = []
 
     def getNome(self):
@@ -20,6 +21,9 @@ class Personagem():
 
     def getEstamina(self):
         return self.__Estamina
+    
+    def getImg(self):
+        return self.__img()
 
     def setNome(self, nome):
         self.__Nome = nome
@@ -32,6 +36,9 @@ class Personagem():
 
     def setEstamina(self, estamina):
         self.__Estamina = estamina
+    
+    def setImg(self, img):
+        self.__img = img()
 
     def adicionar_pokemon(self, pokemon):
         self.pokemons.append(pokemon)
@@ -76,6 +83,9 @@ class Personagem():
                 print('\033[0;31mErro! Digite um número Inteiro Válido.\033[m')
         return x
 
+imgAsh = funcImagens.imgPrintAsh
+imgMisy = funcImagens.imgPrintMisty
 
-ash = Personagem('ASH', 3, 100, 100)
-misty = Personagem('MISTY', 3, 100, 100)
+
+
+

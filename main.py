@@ -1,82 +1,20 @@
 import random
 from personagem import Personagem
-from pokimon import Pokimon
-from treinamento import PokimonTreinado
-import utils
+import funcionalidades
 import time
 import pygame
-import ascii
-
-
-
-#POKEBOLA
-url1 = 'https://1.bp.blogspot.com/_KBmmkCxTLY8/TMBfCU6xtBI/AAAAAAAAAFI/Ia5W4Suucww/s1600/kawax-pokeball-3097.png'
-output1 = ascii.loadFromUrl(url1)
-
-#ASH
-url2 = 'https://i.pinimg.com/originals/8f/0c/42/8f0c42e4b5ffd76f3863950582070c1c.png'
-output2 = ascii.loadFromUrl(url2)
-
-#MYSTI
-url3 = 'https://static.wikia.nocookie.net/pocketmonster/images/f/f0/Misty.png/revision/latest?cb=20160607230147&path-prefix=pt-br'
-output3 = ascii.loadFromUrl(url3)
-#Condição de Vitória
-url4 = 'https://www.acasadocogumelo.com/wp-content/uploads/2015/02/happy_pokemon.png'
-output4 = ascii.loadFromUrl(url4)
-
-
-#Participação especial
-url5 = 'https://avatars.githubusercontent.com/u/70485830?v=4'
-output5 = ascii.loadFromUrl(url5)
-
-#Condição de Derrota
-url6 = 'https://www.criatives.com.br/wp-content/uploads/2012/01/3227198501_8315360dde_o.jpeg'
-
-output6 = ascii.loadFromUrl(url6)
-
-#Agradecimento especial
-url7 = 'https://media-exp1.licdn.com/dms/image/C5603AQHCwoSDIiHTvg/profile-displayphoto-shrink_800_800/0/1618974047796?e=1628121600&v=beta&t=3a-Iu0M4bliPUwRMKWL62FQ84ZWlRtHe0sDnbgWc45E'
-
-output7 = ascii.loadFromUrl(url7)
-
-#coraçãolaura
-urlcore = 'https://i.pinimg.com/736x/d6/5a/b7/d65ab76968d74ccad914d5f8df56a5e0.jpg'
-output8 = ascii.loadFromUrl(urlcore)
-
-
-
-
+import funcImagens
 pygame.init()
-pygame.mixer.music.load('inicio.ogg')
+pygame.mixer.init()
+pygame.mixer.music.load('./audios/inicio.ogg')
 pygame.mixer.music.play(-1)
 pygame.event.wait()
 
-pikachu = Pokimon('PIKACHU', 50, 15, 5)
-charmander = Pokimon('CHARMANDER', 50, 15, 5)
-bulbasaur = Pokimon('BULBASAUR', 50, 15, 5)
-staryu = Pokimon('STARYU', 50, 15, 5)
-gyarados = Pokimon('GYARADOS', 50, 15, 5)
-lapras = Pokimon('LAPRAS', 50, 15, 5)
 
+pokimonAleatorioSelvagem = funcionalidades.instanciaDePokimons()
+pokimonsPersonagem = funcionalidades.instanciaDePokimons()
+pesonagens = funcionalidades.instanciaDePersonagens()
 
-
-#Quando for segunda batalha
-pokimonsTreinados = []
-pokimonsTreinados.append(
-    PokimonTreinado(charmander.get_nome(), charmander.get_hp(),
-                    charmander.get_ataque(), charmander.get_defesa(), 10))
-pokimonsTreinados.append(
-    PokimonTreinado(lapras.get_nome(), lapras.get_hp(), lapras.get_ataque(),
-                    lapras.get_defesa(), 10))
-pokimonsTreinados.append(
-    PokimonTreinado(gyarados.get_nome(), gyarados.get_hp(),
-                    gyarados.get_ataque(), gyarados.get_defesa(), 10))
-pokimonsTreinados.append(
-    PokimonTreinado(bulbasaur.get_nome(), bulbasaur.get_hp(),
-                    bulbasaur.get_ataque(), bulbasaur.get_defesa(), 10))
-
-reacao_aleatoria_pokimon = ['rosna', 'grita', 'pisca', 'pula']
-random.shuffle(reacao_aleatoria_pokimon)
 #Valores dos laços While
 #inicio do game 0
 #Menu de Batalha 1
@@ -84,1369 +22,465 @@ random.shuffle(reacao_aleatoria_pokimon)
 #status inicial do personagem  e menu do jogo 3
 #Descansar 4
 #Ver Pokimons 5
-
+contadorDeCompra = 0
 inicioGame = 0
 ###########################INICIO DO JOGO#######################################################
 while inicioGame == 0:
-    ash = Personagem('ASH', 3, 100, 100)
-    misty = Personagem('MISTY', 3, 100, 100)
-    ash.adicionar_pokemon(pikachu)
-    misty.adicionar_pokemon(staryu)
-    hpPokimonSemTreinamento = 50
-    hpPokimonTreinado = 70
-    print('	\033[1;36m Carregando jogo...')
-    time.sleep(6)
-    utils.clear_screen()
-    print(  output1  )
-    print('\033[1;33m Bem - vindo a Batalha Pokimon')
-    personagem = int(
-        input(
-            '\033[1;35mPor favor selecione seu personagem:\n1 - ASH \n2 - MISTY\nResposta: '
-        ))
-    if personagem == 1:
-        utils.clear_screen()
+    ash = pesonagens[0]
+    misty = pesonagens[1]
+    ash.adicionar_pokemon(pokimonsPersonagem[0])
+    misty.adicionar_pokemon(pokimonsPersonagem[1])
+    print('Carregando jogo...')
+    funcionalidades.clear_screen()
+    print('Bem - vindo ao jogo de captura de pokimons')
+    print(funcImagens.imagePathPokebola)
+    print('Instruções de jogo.')
+    print('Durante a procura de pokinons')
+    print('Por favor selecione seu personagem:\n1 - ASH\n2 - MISTY\n ')
+    personagem = ash
+    x = personagem.resposta()
+    if x == 1:
+        funcionalidades.clear_screen()
         personagem = ash
-        print(output2)
-        print(f'\033[1;34m Você escolheu o {personagem.getNome()}')
-        #print('Localizando pokimons...')
-        time.sleep(5)
+        print(f'Você escolheu o {personagem.getNome()}')
+        personagem.getImg()
+        time.sleep(3)
+        funcionalidades.clear_screen()
+        print(f'{personagem.getNome()} começa com o Pokimom {personagem.pokemons[0].getNome()}')
+        personagem.pokemons[0].getImg()
+        personagem.pokemons[0].getSom().play(1)
+        print('Localizando pokimons...')
+        time.sleep(3)
         inicioGame = 1
-    elif personagem == 2:
-        utils.clear_screen()
-        print(output3)
+    elif x == 2:
+        funcionalidades.clear_screen()
         personagem = misty
-        #print('Localizando pokimons...')
-        print(f'\033[1;35m Você escolheu a {personagem.getNome()}')
-        time.sleep(5)
+        print(f'Você escolheu a {personagem.getNome()}')
+        personagem.getImg()
+        time.sleep(3)
+        funcionalidades.clear_screen()
+        print(f'{personagem.getNome()} começa com o Pokimom {personagem.pokemons[0].getNome()}')
+        personagem.pokemons[0].getImg()
+        personagem.pokemons[0].getSom().play(1)
+        print('Localizando pokimons...')
+        time.sleep(3)
         inicioGame = 1
     else:
-        utils.clear_screen()
-        print('\033[1;31m Opção Invalida.')
+        print('\033[1;91mOpção Inválida\033[m')
+        time.sleep(2)
     while inicioGame == 1:
         ###########################STATUS INICIAL#######################################################
-        if len(personagem.pokemons) >= 3:
-            print('	\033[1;33m=================PARABÉNS!=================')
-            print('	\033[1;33mVocê conseguiu capturar 3 pokimons e com isto é o grande vencedor da Batalha Pokimon!')
-            print(output4)
-            time.sleep(6)
-            break
-        elif len(personagem.pokemons) < 1 and personagem.getVida() <= 0 or len(personagem.pokemons) < 1 and personagem.getEstamina() <= 0 or personagem.getVida() <= 0 or personagem.getDinheiro() <= 0 and len(personagem.pokemons) <= 0:
-            print('\033[1;31mVocê perdeu e não é possivel continuar o jogo!')
-            print('\033[1;31mReiniciando...')
-            print(url6)
-            time.sleep(3)
-            utils.clear_screen()
-            inicioGame = 0
+        funcionalidades.clear_screen()
+        condicaoDeVitoriaDerrota = funcionalidades.condicaoVitoriaDerrota(personagem)
+        if condicaoDeVitoriaDerrota == 0:
+            print('Você perdeu todos os seus pontos de vida.')
+            print(funcImagens.imagePathDerrota)
+            print('Deseja Reiniciar o jogo?')
+            print('1 - Sim\n2 - Não')
+            resp = personagem.resposta()
+            if resp == 1:
+                print('Voltando ao menu de personagens...')
+                del pesonagens[:]
+                del pokimonsPersonagem[:]
+                del pokimonAleatorioSelvagem[:]
+                pokimonAleatorioSelvagem = funcionalidades.instanciaDePokimons()
+                pokimonsPersonagem = funcionalidades.instanciaDePokimons()
+                pesonagens = funcionalidades.instanciaDePersonagens()
+                time.sleep(2)
+                inicioGame = 0
+                break
+            elif resp == 2:
+                break
+            else:
+                print('\033[0;31mOpção inválida.\033[m')
+                time.sleep(2)    
+        elif condicaoDeVitoriaDerrota == 1:
+            print('Você não possui mais Stamina e Dinheiro Suficientes.')
+            print('Deseja Reiniciar o jogo?')
+            print('1 - Sim\n2 - Não')
+            resp = personagem.resposta()
+            if resp == 1:
+                print('Voltando ao menu de personagens...')
+                del pesonagens[:]
+                del pokimonsPersonagem[:]
+                del pokimonAleatorioSelvagem[:]
+                pokimonAleatorioSelvagem = funcionalidades.instanciaDePokimons()
+                pokimonsPersonagem = funcionalidades.instanciaDePokimons()
+                pesonagens = funcionalidades.instanciaDePersonagens()
+                time.sleep(2)
+                inicioGame = 0
+                break
+            elif resp == 2:
+                break
+            else:
+                print('\033[0;31mOpção inválida.\033[m')
+                time.sleep(2)    
+        elif condicaoDeVitoriaDerrota == 2:
+            print('Parabéns. Você conquistou os pokimons necessarios')
+            print(funcImagens.imagePathVitoria)
+            print('Deseja Reiniciar o jogo?')
+            print('1 - Sim\n2 - Não')
+            resp = personagem.resposta()
+            if resp == 1:
+                print('Voltando ao menu de personagens...')
+                del pesonagens[:]
+                del pokimonsPersonagem[:]
+                del pokimonAleatorioSelvagem[:]
+                pokimonAleatorioSelvagem = funcionalidades.instanciaDePokimons()
+                pokimonsPersonagem = funcionalidades.instanciaDePokimons()
+                pesonagens = funcionalidades.instanciaDePersonagens()
+                time.sleep(2)
+                inicioGame = 0
+                break
+            elif resp == 2:
+                break
+            else:
+                print('\033[0;31mOpção inválida.\033[m')
+                time.sleep(2)    
         else:
-            utils.clear_screen()
-            print('\033[1;31m Instruções de jogo: \n')
-            print('\033[1;31mDurante o jogo você terá 3 vidas e para vencer deve conseguir 3 Pokimons. \n')
-            print('\033[1;31mVocê perde o jogo ao perder suas vidas ou se sua stamina chegar a 0.\n')
-            print('\033[1;34m=================ATRIBUTOS DO PERSONAGEM=================')
+            funcionalidades.clear_screen()
+        print('!!!ATRIBUTOS DO PERSONAGEM!!!')
+        print(
+            f'Nome: {personagem.getNome()} Vida: {personagem.getVida()} Estamina: {personagem.getEstamina()} Dinheiro: {personagem.getDinheiro()}'
+        )
+        print('POKIMON:')
+        for v in personagem.pokemons:
             print(
-                f'	\033[1;37mNome: {personagem.getNome()} Vida: {personagem.getVida()} Estamina: {personagem.getEstamina()} Dinheiro: {personagem.getDinheiro()}'
+                f'Nome: {v.getNome()} HP: {v.getHp()} Ataque: {v.getAtaque()} Defesa: {v.getDefesa()}'
             )
-            print()
-            print('\033[1;34m=================ATRIBUTOS DO POKIMON=================\n')
-    
-            for v in personagem.pokemons:
-                print(
-                    f'	\033[1;37mNome: {v.get_nome()} HP: {v.get_hp()} Ataque: {v.get_ataque()} Defesa: {v.get_defesa()}'
-                )
-            print()
-            print('\033[1;32mEscolha uma opção: \n')
-            print('\033[1;32m1 - Procurar pokimon (Gasta 25 de Estamina)')
-            print('\033[1;32m2 - Treinar pokimon (Gasta 50 de Dinheiro)')
-            print(
-                '\033[1;32m3 - Descansar (Gasta 50 de Dinheiro e recupera 70 de HP para 1 Pokimon)'
-            )
-            print('\033[1;32m4 - Comprar Pokimom (Gasta 100 de Dinheiro)')
-            print('\033[1;32m5 - Ver seus Pokimons')
-            print('\033[1;32m6 - Ver participação especial!')
-            print('\033[1;32m7 - Ver agradecimento especial!')
-            x = int(input('\033[1;32mResposta: '))
-            if x == 1:
-                testeDeForca = 0
-                for v in personagem.pokemons:
-                    if v.get_ataque() > 15:
-                        testeDeForca = 1
-                    else:
-                        testeDeForca = 0
-
-                if testeDeForca == 0:
-###########################################MENU DE BATALHA#######################################################
-                    inicioGame = 2
-                    while inicioGame == 2:
-                        if personagem.getVida() <= 0 or len(
-                                personagem.pokemons
-                        ) == 0 or personagem.getEstamina() < 25:
-                            print(
-                                '\033[1;31mSeu personagem não possui pokemons, vidas ou stamina suficientes'
-                            )
-                            time.sleep(2)
-                            inicioGame = 1
-                        else:
-                            telaDeBatalha = 0
-                            while telaDeBatalha == 0:
-                                pikachu = Pokimon('PIKACHU', 50, 15, 5)
-                                charmander = Pokimon('CHARMANDER', 50, 15, 5)
-                                bulbasaur = Pokimon('BULBASAUR', 50, 15, 5)
-                                staryu = Pokimon('STARYU', 50, 15, 5)
-                                gyarados = Pokimon('GYARADOS', 50, 15, 5)
-                                lapras = Pokimon('LAPRAS', 50, 15, 5)
-                                pokimon_aleatorio = [
-                                    charmander, bulbasaur, gyarados, lapras
-                                ]
-                                utils.clear_screen()
-                                print('\033[1;34m=================ATRIBUTOS DO PERSONAGEM=================')
-                                print(
-                                    f'	\033[1;37mNome: \033[1;37m{personagem.getNome()} \033[1;37mVida: \033[1;37m{personagem.getVida()} \033[1;37mEstamina: \033[1;37m{personagem.getEstamina()} \033[1;37mDinheiro: \033[1;37m{personagem.getDinheiro()}'
-                                )
-                                print()
-                                print('\033[1;34m=================POKIMONS=================')
-                                for v in personagem.pokemons:
-                                    print(
-                                        f'\033[1;37mNome: {v.get_nome()} HP: {v.get_hp()} Ataque: {v.get_ataque()} Defesa: {v.get_defesa()}'
-                                    )
-                                print()
-                                print('\033[1;32m=================BEM VINDO AO MENU DE BATALHA=================\n')
-                                print('\033[1;33mVocê deseja procurar Pokimons?')
-                                print('\033[1;33m1 - Sim / 2 - Não')
-                                y = int(input('\033[1;33mResposta: '))
-                                utils.clear_screen()
-                                if y != 1:
-                                    lutando = 10
-                                    telaDeBatalha = 10
-                                    inicioGame = 1
-                                    qtdBatalha2 = 0
-                                elif len(personagem.pokemons) >= 3:
-                                    print('\033[1;33m=================PARABÉNS=================')
-                                    print('\033[1;33mVocê conseguiu capturar 3 pokimons e com isto é o grande vencedor da Batalha Pokimon!')
-                                    time.sleep(5)
-                                    print(output4)
-                                    break
-                                elif len(personagem.pokemons) < 1 and personagem.getVida() <= 0 or len(personagem.pokemons) < 1 and personagem.getEstamina() <= 0 or personagem.getVida() <= 0:
-                                    print('\033[1;31mVocê perdeu e não é possivel continuar o jogo!')
-                                    print('\033[1;31mReiniciando...')
-                                    print(output6)
-                                    time.sleep(3)
-                                    utils.clear_screen()
-                                    inicioGame = 0
-                                elif y == 1:
-                                    gastoStamina = personagem.getEstamina() - 25
-                                    personagem.setEstamina(gastoStamina)
-                                    telaDeBatalha = 1
-    #PRIMEIR BATALHA###############################################PRIMEIRA BATALHA##############################################################
-                                    qtdBatalha2 = 0
-                                    while telaDeBatalha == 1:
-                                        if qtdBatalha2 < 2:
-                                            pokimon_aleatorio = [
-                                                charmander, bulbasaur, gyarados, lapras
-                                            ]
-                                            random.shuffle(pokimon_aleatorio)
-                                            reacao_aleatoria_pokimon = [
-                                                'rosna', 'grita', 'pisca', 'pula'
-                                            ]
-                                            random.shuffle(pokimon_aleatorio)
-                                            random.shuffle(reacao_aleatoria_pokimon)
-                                            pokimon_encontrado = pokimon_aleatorio[0]
-                                            print(
-                                                f'\033[1;34mVocê encontrou o pokimon {pokimon_encontrado.get_nome()}'
-                                            )
-                                            print('\033[1;34mDeseja atacar?\n1 - sim\n2 - não\n')
-                                            atacar = int(input('\033[1;34mResposta: \n'))
-                                            if atacar == 1:
-                                                utils.clear_screen()
-                                                if len(personagem.pokemons) > 1:
-    #########################Personagem com 2 Pokimons###############################################################################
-                                                    print('\033[1;33mEscolha um de seus Pokimons:')
-                                                    count = 0
-                                                    for v in personagem.pokemons:
-                                                        count += 1
-                                                        print(f'\033[1;37mPOKIMON: {count} - {v.get_nome()} HP:{v.get_hp()} Ataque:{v.get_ataque()} Defesa:{v.get_defesa()}')
-                                                    pokimon_escolhido = int(input('\033[1;33mResposta: '))
-                                                    if pokimon_escolhido == 1:
-    #########################Condição de Pokimon na posição 0 ###############################################################################
-                                                        pokimon_para_batalha = personagem.pokemons[
-                                                            0]
-                                                        utils.clear_screen()
-                                                        print(
-                                                            f'\033[1;37mStatus do Pokimon escolhido: {pokimon_para_batalha.get_nome()} HP:{pokimon_para_batalha.get_hp()} Ataque:{pokimon_para_batalha.get_ataque()} Defesa:{pokimon_para_batalha.get_defesa()}'
-                                                        )
-                                                        lutando = 0
-                                                        while lutando == 0:
-    #########################Entrando na luta laço while lutando = 0 #############################################################################################
-                                                            print(
-                                                                f'\033[1;34mO Pokimom encontrado {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[0]} para você'
-                                                            )
-                                                            escolha_personagem = int(
-                                                                input(
-                                                                    '\033[1;33mO que você deseja fazer?\n1 - Atacar\n2 - Correr\nReação: \n'
-                                                                ))
-                                                            if escolha_personagem == 1:
-    #########################Escolha do personagem Atacar##############################################################
-                                                                utils.clear_screen()
-                                                                defesaTotalEncontrado = pokimon_encontrado.get_defesa(
-                                                                )
-                                                                danoPokimonEscolhio = pokimon_para_batalha.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEncontrado
-                                                                )
-                                                                inserindoDano = pokimon_encontrado.get_hp(
-                                                                ) - danoPokimonEscolhio
-                                                                pokimon_encontrado.set_hp(
-                                                                    inserindoDano)
-                                                                defesaTotalEscolhido = pokimon_para_batalha.get_defesa(
-                                                                )
-                                                                danoPokimonEncontrado = pokimon_encontrado.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEscolhido
-                                                                )
-                                                                inserindoDano = pokimon_para_batalha.get_hp(
-                                                                ) - danoPokimonEncontrado
-                                                                pokimon_para_batalha.set_hp(
-                                                                    inserindoDano)
-                                                                print(
-                                                                    f'\033[1;34mSeu pokimom {pokimon_para_batalha.get_nome()} atacou e causou {danoPokimonEscolhio} de dano no pokimom {pokimon_encontrado.get_nome()}'
-                                                                )
-                                                                time.sleep(1)
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;34mO pokimon encontrado {pokimon_encontrado.get_nome()} contra-atacou e causou {danoPokimonEncontrado} de dano no pokimom {pokimon_para_batalha.get_nome()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom escolhido {pokimon_para_batalha.get_nome()} é de {pokimon_para_batalha.get_hp()}'
-                                                                )
-                                                                print(
-                                                                    f'\033[1;35mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                if pokimon_encontrado.get_hp(
-                                                                ) >= 1:
-                                                                    print(
-                                                                        f'\033[1;34mO pokimon {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    pokimon_encontrado.set_hp(
-                                                                        hpPokimonSemTreinamento
-                                                                    )
-                                                                    personagem.adicionar_pokemon(
-                                                                        pokimon_encontrado
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;34mO pokemon encontrado {pokimon_encontrado.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;33mO personagem {personagem.getNome()} ganhou o pokimom {pokimon_encontrado.get_nome()}'
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O PRIMEIRO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(4)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                                    qtdBatalha2 = 0
-                                                                if pokimon_para_batalha.get_hp(
-                                                                ) > 1:
-                                                                    print(
-                                                                        f'\033[1;33mO seu pokimon {pokimon_para_batalha.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon {pokimon_para_batalha.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu o pokimom {pokimon_para_batalha.get_nome()}'
-                                                                    )
-                                                                    vidaPers = personagem.getVida(
-                                                                    ) - 1
-                                                                    personagem.setVida(
-                                                                        vidaPers)
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu 1 vida!'
-                                                                    )
-                                                                    personagem.remover_pokemon(
-                                                                        pokimon_para_batalha
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O PRIMEIRO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(3)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                            elif escolha_personagem == 2:
-                                                                print(
-                                                                    '\033[1;31mVocê correu da batalha!'
-                                                                )
-                                                                lutando = 1
-                                                    elif pokimon_escolhido == 2:
-    ##############################Escolha do personagem segundo pokimon POKIMON LISTA COM 2########################################################
-                                                        pokimon_para_batalha = personagem.pokemons[
-                                                            1]
-                                                        utils.clear_screen()
-                                                        print(
-                                                            f'\033[1;34mStatus do Pokimon escolhido: {pokimon_para_batalha.get_nome()} HP:{pokimon_para_batalha.get_hp()} Ataque:{pokimon_para_batalha.get_ataque()} Defesa:{pokimon_para_batalha.get_defesa()}'
-                                                        )
-                                                        lutando = 0
-                                                        while lutando == 0:
-    #########################Entrando na luta laço while lutando = 0 #############################################################################################
-                                                            print(
-                                                                f'\033[1;34mO Pokimom encontrado {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[0]} para você'
-                                                            )
-                                                            escolha_personagem = int(
-                                                                input(
-                                                                    '\033[1;33mO que você deseja fazer?\n1 - Atacar\n2 - Correr\nReação: \n'
-                                                                ))
-                                                            if escolha_personagem == 1:
-    #########################Escolha do personagem Atacar##############################################################
-                                                                utils.clear_screen()                             
-                                                                lutando = 10
-                                                                telaDeBatalha = 10
-                                                                inicioGame = 1
-                                                                qtdBatalha2 = 0
-                                                            elif len(personagem.pokemons) >= 3:
-                                                                print('\033[1;33m=================PARABÉNS=================')
-                                                                print('\033[1;33mVocê conseguiu 3 pokimons e venceu a Batalha Pokimon!')
-                                                                time.sleep(5)
-                                                                print(output4)
-                                                                break
-                                                            elif len(personagem.pokemons) < 1 and personagem.getVida() <= 0 or len(personagem.pokemons) < 1 and personagem.getEstamina() <= 0 or personagem.getVida() <= 0:
-                                                                print('\033[1;31mVocê perdeu e não é possivel continuar o jogo!')
-                                                                print('\033[1;31mReiniciando...')
-                                                                print(output6)
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                inicioGame = 0
-                                                                defesaTotalEncontrado = pokimon_encontrado.get_defesa(
-                                                                )
-                                                                danoPokimonEscolhio = pokimon_para_batalha.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEncontrado
-                                                                )
-                                                                inserindoDano = pokimon_encontrado.get_hp(
-                                                                ) - danoPokimonEscolhio
-                                                                pokimon_encontrado.set_hp(
-                                                                    inserindoDano)
-                                                                defesaTotalEscolhido = pokimon_para_batalha.get_defesa(
-                                                                )
-                                                                danoPokimonEncontrado = pokimon_encontrado.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEscolhido
-                                                                )
-                                                                inserindoDano = pokimon_para_batalha.get_hp(
-                                                                ) - danoPokimonEncontrado
-                                                                pokimon_para_batalha.set_hp(
-                                                                    inserindoDano)
-                                                                print(
-                                                                    f'\033[1;34mSeu pokimom {pokimon_para_batalha.get_nome()} atacou e causou {danoPokimonEscolhio} de dano no pokimom {pokimon_encontrado.get_nome()}'
-                                                                )
-                                                                time.sleep(1)
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;34mO pokimon encontrado {pokimon_encontrado.get_nome()} contra-atacou e causou {danoPokimonEncontrado} de dano no pokimom {pokimon_para_batalha.get_nome()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom escolhido {pokimon_para_batalha.get_nome()} é de {pokimon_para_batalha.get_hp()}'
-                                                                )
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                if pokimon_encontrado.get_hp(
-                                                                ) >= 1:
-                                                                    print(
-                                                                        f'\033[1;34mO pokimon {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    pokimon_encontrado.set_hp(
-                                                                        hpPokimonSemTreinamento
-                                                                    )
-                                                                    personagem.adicionar_pokemon(
-                                                                        pokimon_encontrado
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;34mO pokemon encontrado {pokimon_encontrado.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;33mO personagem {personagem.getNome()} ganhou o pokimom {pokimon_encontrado.get_nome()}'
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O SEGUNDO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(4)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                                    qtdBatalha2 = 0
-                                                                if pokimon_para_batalha.get_hp(
-                                                                ) > 1:
-                                                                    print(
-                                                                        f'\033[1;34mO seu pokimon {pokimon_para_batalha.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon {pokimon_para_batalha.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu o pokimom {pokimon_para_batalha.get_nome()}'
-                                                                    )
-                                                                    vidaPers = personagem.getVida(
-                                                                    ) - 1
-                                                                    personagem.setVida(
-                                                                        vidaPers)
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu 1 vida!'
-                                                                    )
-                                                                    personagem.remover_pokemon(
-                                                                        pokimon_para_batalha
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O SEGUNDO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(3)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                            elif escolha_personagem == 2:
-                                                                print(
-                                                                    '\033[1;31mVocê correu da batalha!'
-                                                                )
-                                                                time.sleep(2)
-                                                                lutando = 10
-                                                                telaDeBatalha = 10
-                                                                inicioGame = 1
-    ####################################Ataque com 1 pokimom#####################################################################################################################################################################################################
-                                                else:
-                                                    lutando = 0
-                                                    while lutando == 0:
-    #########################Condição de Pokimon na posição 0 ###############################################################################
-                                                        pokimon_para_batalha = personagem.pokemons[
-                                                            0]
-                                                        utils.clear_screen()
-                                                        print(
-                                                            f'\033[1;37mStatus do Pokimon escolhido: {pokimon_para_batalha.get_nome()} HP:{pokimon_para_batalha.get_hp()} Ataque:{pokimon_para_batalha.get_ataque()} Defesa:{pokimon_para_batalha.get_defesa()}'
-                                                        )
-                                                        lutando = 0
-                                                        while lutando == 0:
-    #########################Entrando na luta laço while lutando = 0 #############################################################################################
-                                                            print(
-                                                                f'\033[1;34mO Pokimom encontrado {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[0]} para você'
-                                                            )
-                                                            escolha_personagem = int(
-                                                                input(
-                                                                    '\033[1;32mO que você deseja fazer?\n1 - Atacar\n2 - Correr\nReação: \n'
-                                                                ))
-                                                            if escolha_personagem == 1:
-    #########################Escolha do personagem Atacar##############################################################
-                                                                utils.clear_screen()
-                                                                defesaTotalEncontrado = pokimon_encontrado.get_defesa(
-                                                                )
-                                                                danoPokimonEscolhio = pokimon_para_batalha.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEncontrado
-                                                                )
-                                                                inserindoDano = pokimon_encontrado.get_hp(
-                                                                ) - danoPokimonEscolhio
-                                                                pokimon_encontrado.set_hp(
-                                                                    inserindoDano)
-                                                                defesaTotalEscolhido = pokimon_para_batalha.get_defesa(
-                                                                )
-                                                                danoPokimonEncontrado = pokimon_encontrado.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEscolhido
-                                                                )
-                                                                inserindoDano = pokimon_para_batalha.get_hp(
-                                                                ) - danoPokimonEncontrado
-                                                                pokimon_para_batalha.set_hp(
-                                                                    inserindoDano)
-                                                                print(
-                                                                    f'\033[1;34mSeu pokimom {pokimon_para_batalha.get_nome()} atacou e causou {danoPokimonEscolhio} de dano no pokimom {pokimon_encontrado.get_nome()}'
-                                                                )
-                                                                time.sleep(1)
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;34mO pokimon encontrado {pokimon_encontrado.get_nome()} contra-atacou e causou {danoPokimonEncontrado} de dano no pokimom {pokimon_para_batalha.get_nome()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom escolhido {pokimon_para_batalha.get_nome()} é de {pokimon_para_batalha.get_hp()}'
-                                                                )
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                if pokimon_encontrado.get_hp(
-                                                                ) >= 1:
-                                                                    print(
-                                                                        f'\033[1;34mO pokimon {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    pokimon_encontrado.set_hp(
-                                                                        hpPokimonSemTreinamento
-                                                                    )
-                                                                    personagem.adicionar_pokemon(
-                                                                        pokimon_encontrado
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon encontrado {pokimon_encontrado.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;33mO personagem {personagem.getNome()} ganhou o pokimom {pokimon_encontrado.get_nome()}'
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O PRIMEIRO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(4)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                                    qtdBatalha2 = 0
-                                                                if pokimon_para_batalha.get_hp(
-                                                                ) > 1:
-                                                                    print(
-                                                                        f'\033[1;34mO seu pokimon {pokimon_para_batalha.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon {pokimon_para_batalha.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu o pokimom {pokimon_para_batalha.get_nome()}'
-                                                                    )
-                                                                    vidaPers = personagem.getVida(
-                                                                    ) - 1
-                                                                    personagem.setVida(
-                                                                        vidaPers)
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu 1 vida!'
-                                                                    )
-                                                                    personagem.remover_pokemon(
-                                                                        pokimon_para_batalha
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O PRIMEIRO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(3)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                            elif escolha_personagem == 2:
-                                                                print(
-                                                                    '\033[1;31mVocê correu da batalha!'
-                                                                )
-                                                                lutando = 1
-                                            else:
-                                                print('\033[1;31mVocê correu da batalha!')
-                                                time.sleep(2)
-                                                lutando = 10
-                                                telaDeBatalha = 10
-                                                inicioGame = 1
-                                        else:
-                                            print('\033[1;31mVocê correu da batalha!')
-                                            time.sleep(2)
-                                            lutando = 10
-                                            telaDeBatalha = 10
-                                            inicioGame = 1
-                else:
-                    inicioGame = 7
-                    while inicioGame == 7:
-                        if personagem.getVida() <= 0 or len(
-                                personagem.pokemons
-                        ) == 0 or personagem.getEstamina() < 25:
-                            print(
-                                '\033[1;31mSeu personagem não possui pokemons, vidas ou stamina suficientes'
-                            )
-                            time.sleep(2)
-                            inicioGame = 1
-                        else:
-                            telaDeBatalha = 0
-                            while telaDeBatalha == 0:
-                                utils.clear_screen()
-                                print('\033[1;34m\033[1;31m==================ATRIBUTOS DO PERSONAGEM=================')
-                                print(
-                                    f'\033[1;37mNome: {personagem.getNome()} Vida: {personagem.getVida()} Estamina: {personagem.getEstamina()} Dinheiro: {personagem.getDinheiro()}'
-                                )
-                                print()
-                                print('\033[1;34m=================POKIMONS=================')
-                                for v in personagem.pokemons:
-                                    print(
-                                        f'\033[1;37mNome: {v.get_nome()} HP: {v.get_hp()} Ataque: {v.get_ataque()} Defesa: {v.get_defesa()}'
-                                    )
-                                print('\033[1;34m=================POKIMONS=================')
-                                print()
-                                print('\033[1;33m=================BEM VINDO AO MENU DE BATALHA=================\n')
-                                print('\033[1;34mVocê deseja procurar pokimons?')
-                                print('\033[1;34m1 - Sim / 2 - Não')
-                                y = int(input('\033[1;34mResposta: '))
-                                utils.clear_screen()
-                                if y != 1:
-                                    lutando = 10
-                                    telaDeBatalha = 10
-                                    inicioGame = 1
-                                    qtdBatalha2 = 0
-                                elif len(personagem.pokemons) >= 3:
-                                    print('\033[1;33m=================PARABÉNS=================')
-                                    print('\033[1;33mVocê conseguiu 3 Pokimons e venceu a Batalha Pokimon')
-                                    time.sleep(5)
-                                    print(output4)
-                                    break
-                                elif len(personagem.pokemons) < 1 and personagem.getVida() <= 0 or len(personagem.pokemons) < 1 and personagem.getEstamina() <= 0 or personagem.getVida() <= 0:
-                                    print('\033[1;31mNao é possivel continuar o jogo!')
-                                    print('\033[1;31mReiniciando...')
-                                    print(output6)
-                                    time.sleep(3)
-                                    utils.clear_screen()
-                                    inicioGame = 0
-                                elif y == 1:
-                                    gastoStamina = personagem.getEstamina() - 25
-                                    personagem.setEstamina(gastoStamina)
-                                    telaDeBatalha = 1
-    #PRIMEIR BATALHA###############################################PRIMEIRA BATALHA##############################################################
-                                    qtdBatalha2 = 0
-                                    while telaDeBatalha == 1:
-                                        if qtdBatalha2 < 2:
-                                            pokimonAleatorioTreinado = pokimonsTreinados
-                                            for v in pokimonsTreinados:
-                                                v.set_hp(70)
-                                            random.shuffle(pokimonAleatorioTreinado)
-                                            reacao_aleatoria_pokimon = [
-                                                'rosna', 'grita', 'pisca', 'pula'
-                                            ]
-                                            random.shuffle(pokimonAleatorioTreinado)
-                                            random.shuffle(reacao_aleatoria_pokimon)
-                                            pokimon_encontrado = pokimonAleatorioTreinado[0]
-                                            print(
-                                                f'\033[1;34mVocê encontrou o pokimon {pokimon_encontrado.get_nome()}'
-                                            )
-                                            print('\033[1;34mDeseja atacar?\n1 - sim\n2 - não')
-                                            atacar = int(input('\033[1;34mResposta: '))
-                                            if atacar == 1:
-                                                utils.clear_screen()
-                                                if len(personagem.pokemons) > 1:
-    #########################Personagem com 2 Pokimons###############################################################################
-                                                    print('\033[1;33mEscolha um de seus Pokimons:')
-                                                    count = 0
-                                                    for v in personagem.pokemons:
-                                                        count += 1
-                                                        print(f'\033[1;37mPOKIMON: {count} - {v.get_nome()} HP:{v.get_hp()} Ataque:{v.get_ataque()} Defesa:{v.get_defesa()}')
-                                                    pokimon_escolhido = int(input('\033[1;34mResposta: '))
-                                                    if pokimon_escolhido == 1:
-    #########################Condição de Pokimon na posição 0 ###############################################################################
-                                                        pokimon_para_batalha = personagem.pokemons[
-                                                            0]
-                                                        utils.clear_screen()
-                                                        print(
-                                                            f'\033[1;37mStatus do Pokimon escolhido: {pokimon_para_batalha.get_nome()} HP:{pokimon_para_batalha.get_hp()} Ataque:{pokimon_para_batalha.get_ataque()} Defesa:{pokimon_para_batalha.get_defesa()}'
-                                                        )
-                                                        lutando = 0
-                                                        while lutando == 0:
-    #########################Entrando na luta laço while lutando = 0 #############################################################################################
-                                                            print(
-                                                                f'\033[1;34mO Pokimom encontrado {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[0]} para você'
-                                                            )
-                                                            escolha_personagem = int(
-                                                                input(
-                                                                    '\033[1;34mO que você deseja fazer?\n1 - Atacar\n2 - Correr\nReação: '
-                                                                ))
-                                                            if escolha_personagem == 1:
-    #########################Escolha do personagem Atacar##############################################################
-                                                                utils.clear_screen()
-                                                                defesaTotalEncontrado = pokimon_encontrado.get_defesa(
-                                                                )
-                                                                danoPokimonEscolhio = pokimon_para_batalha.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEncontrado
-                                                                )
-                                                                inserindoDano = pokimon_encontrado.get_hp(
-                                                                ) - danoPokimonEscolhio
-                                                                pokimon_encontrado.set_hp(
-                                                                    -inserindoDano)
-                                                                defesaTotalEscolhido = pokimon_para_batalha.get_defesa(
-                                                                )
-                                                                danoPokimonEncontrado = pokimon_encontrado.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEscolhido
-                                                                )
-                                                                inserindoDano = pokimon_para_batalha.get_hp(
-                                                                ) - danoPokimonEncontrado
-                                                                pokimon_para_batalha.set_hp(
-                                                                    -inserindoDano)
-                                                                print(
-                                                                    f'\033[1;34mSeu pokimom {pokimon_para_batalha.get_nome()} atacou e causou {danoPokimonEscolhio} de dano no pokimom {pokimon_encontrado.get_nome()}'
-                                                                )
-                                                                time.sleep(1)
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;34mO pokimon encontrado {pokimon_encontrado.get_nome()} contra-atacou e causou {danoPokimonEncontrado} de dano no pokimom {pokimon_para_batalha.get_nome()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom escolhido {pokimon_para_batalha.get_nome()} é de {pokimon_para_batalha.get_hp()}'
-                                                                )
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                if pokimon_encontrado.get_hp(
-                                                                ) >= 1:
-                                                                    print(
-                                                                        f'\033[1;34mO pokimon {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    pokimon_encontrado.set_hp(
-                                                                        hpPokimonTreinado
-                                                                    )
-                                                                    personagem.adicionar_pokemon(
-                                                                        pokimon_encontrado
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon encontrado {pokimon_encontrado.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} ganhou o pokimom {pokimon_encontrado.get_nome()}'
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O PRIMEIRO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(4)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                                    qtdBatalha2 = 0
-                                                                if pokimon_para_batalha.get_hp(
-                                                                ) > 1:
-                                                                    print(
-                                                                        f'\033[1;33mO seu pokimon {pokimon_para_batalha.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon {pokimon_para_batalha.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu o pokimom {pokimon_para_batalha.get_nome()}'
-                                                                    )
-                                                                    vidaPers = personagem.getVida(
-                                                                    ) - 1
-                                                                    personagem.setVida(
-                                                                        vidaPers)
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu 1 vida!'
-                                                                    )
-                                                                    personagem.remover_pokemon(
-                                                                        pokimon_para_batalha
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O PRIMEIRO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(3)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                            elif escolha_personagem == 2:
-                                                                print(
-                                                                    '\033[1;31mVocê correu da batalha!'
-                                                                )
-                                                                lutando = 1
-                                                    elif pokimon_escolhido == 2:
-    ##############################Escolha do personagem segundo pokimon POKIMON LISTA COM 2########################################################
-                                                        pokimon_para_batalha = personagem.pokemons[
-                                                            1]
-                                                        utils.clear_screen()
-                                                        print(
-                                                            f'\033[1;37mStatus do Pokimon escolhido: {pokimon_para_batalha.get_nome()} HP:{pokimon_para_batalha.get_hp()} Ataque:{pokimon_para_batalha.get_ataque()} Defesa:{pokimon_para_batalha.get_defesa()}'
-                                                        )
-                                                        lutando = 0
-                                                        while lutando == 0:
-    #########################Entrando na luta laço while lutando = 0 #############################################################################################
-                                                            print(
-                                                                f'\033[1;34mO Pokimom encontrado {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[0]} para você'
-                                                            )
-                                                            escolha_personagem = int(
-                                                                input(
-                                                                    '\033[1;34mO que você deseja fazer?\n1 - Atacar\n2 - Correr\nReação: '
-                                                                ))
-                                                            if escolha_personagem == 1:
-    #########################Escolha do personagem Atacar##############################################################
-                                                                utils.clear_screen()
-                                                                defesaTotalEncontrado = pokimon_encontrado.get_defesa(
-                                                                )
-                                                                danoPokimonEscolhio = pokimon_para_batalha.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEncontrado
-                                                                )
-                                                                inserindoDano = pokimon_encontrado.get_hp(
-                                                                ) - danoPokimonEscolhio
-                                                                pokimon_encontrado.set_hp(
-                                                                    inserindoDano)
-                                                                defesaTotalEscolhido = pokimon_para_batalha.get_defesa(
-                                                                )
-                                                                danoPokimonEncontrado = pokimon_encontrado.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEscolhido
-                                                                )
-                                                                inserindoDano = pokimon_para_batalha.get_hp(
-                                                                ) - danoPokimonEncontrado
-                                                                pokimon_para_batalha.set_hp(
-                                                                    inserindoDano)
-                                                                print(
-                                                                    f'\033[1;34mSeu pokimom {pokimon_para_batalha.get_nome()} atacou e causou {danoPokimonEscolhio} de dano no pokimom {pokimon_encontrado.get_nome()}'
-                                                                )
-                                                                time.sleep(1)
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;34mO pokimon encontrado {pokimon_encontrado.get_nome()} contra-atacou e causou {danoPokimonEncontrado} de dano no pokimom {pokimon_para_batalha.get_nome()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom escolhido {pokimon_para_batalha.get_nome()} é de {pokimon_para_batalha.get_hp()}'
-                                                                )
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                if pokimon_encontrado.get_hp(
-                                                                ) >= 1:
-                                                                    print(
-                                                                        f'\033[1;34mO pokimon {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    pokimon_encontrado.set_hp(
-                                                                        hpPokimonTreinado
-                                                                    )
-                                                                    personagem.adicionar_pokemon(
-                                                                        pokimon_encontrado
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon encontrado {pokimon_encontrado.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;33mO personagem {personagem.getNome()} ganhou o pokimom {pokimon_encontrado.get_nome()}'
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O SEGUNDO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(4)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                                    qtdBatalha2 = 0
-                                                                if pokimon_para_batalha.get_hp(
-                                                                ) > 1:
-                                                                    print(
-                                                                        f'\033[1;33mO seu pokimon {pokimon_para_batalha.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon {pokimon_para_batalha.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu o pokimom {pokimon_para_batalha.get_nome()}'
-                                                                    )
-                                                                    vidaPers = personagem.getVida(
-                                                                    ) - 1
-                                                                    personagem.setVida(
-                                                                        vidaPers)
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu 1 vida!'
-                                                                    )
-                                                                    personagem.remover_pokemon(
-                                                                        pokimon_para_batalha
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O SEGUNDO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(3)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                            elif escolha_personagem == 2:
-                                                                print(
-                                                                    '\033[1;31mVocê correu da batalha!'
-                                                                )
-                                                                time.sleep(2)
-                                                                lutando = 10
-                                                                telaDeBatalha = 10
-                                                                inicioGame = 1
-    ####################################Ataque com 1 pokimom#####################################################################################################################################################################################################
-                                                else:
-                                                    lutando = 0
-                                                    while lutando == 0:
-    #########################Condição de Pokimon na posição 0 ###############################################################################
-                                                        pokimon_para_batalha = personagem.pokemons[
-                                                            0]
-                                                        utils.clear_screen()
-                                                        print(
-                                                            f'\033[1;37mStatus do Pokimon escolhido: {pokimon_para_batalha.get_nome()} HP:{pokimon_para_batalha.get_hp()} Ataque:{pokimon_para_batalha.get_ataque()} Defesa:{pokimon_para_batalha.get_defesa()}'
-                                                        )
-                                                        lutando = 0
-                                                        while lutando == 0:
-    #########################Entrando na luta laço while lutando = 0 #############################################################################################
-                                                            print(
-                                                                f'\033[1;34mO Pokimom encontrado {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[0]} para você'
-                                                            )
-                                                            escolha_personagem = int(
-                                                                input(
-                                                                    '\033[1;34mO que você deseja fazer?\n1 - Atacar\n2 - Correr\nReação: \n'
-                                                                ))
-                                                            if escolha_personagem == 1:
-    #########################Escolha do personagem Atacar##############################################################
-                                                                utils.clear_screen()
-                                                                defesaTotalEncontrado = pokimon_encontrado.get_defesa(
-                                                                )
-                                                                danoPokimonEscolhio = pokimon_para_batalha.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEncontrado
-                                                                )
-                                                                inserindoDano = pokimon_encontrado.get_hp(
-                                                                ) - danoPokimonEscolhio
-                                                                pokimon_encontrado.set_hp(
-                                                                    inserindoDano)
-                                                                defesaTotalEscolhido = pokimon_para_batalha.get_defesa(
-                                                                )
-                                                                danoPokimonEncontrado = pokimon_encontrado.get_ataque(
-                                                                ) - random.randint(
-                                                                    1,
-                                                                    defesaTotalEscolhido
-                                                                )
-                                                                inserindoDano = pokimon_para_batalha.get_hp(
-                                                                ) - danoPokimonEncontrado
-                                                                pokimon_para_batalha.set_hp(
-                                                                    inserindoDano)
-                                                                print(
-                                                                    f'\033[1;34mSeu pokimom {pokimon_para_batalha.get_nome()} atacou e causou {danoPokimonEscolhio} de dano no pokimom {pokimon_encontrado.get_nome()}'
-                                                                )
-                                                                time.sleep(1)
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;34mO pokimon encontrado {pokimon_encontrado.get_nome()} contra-atacou e causou {danoPokimonEncontrado} de dano no pokimom {pokimon_para_batalha.get_nome()}'
-                                                                )
-                                                                time.sleep(3)
-                                                                utils.clear_screen()
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom escolhido {pokimon_para_batalha.get_nome()} é de {pokimon_para_batalha.get_hp()}'
-                                                                )
-                                                                print(
-                                                                    f'\033[1;37mO HP atual do pokimom encontrado {pokimon_encontrado.get_nome()} é de {pokimon_encontrado.get_hp()}'
-                                                                )
-                                                                if pokimon_encontrado.get_hp(
-                                                                ) >= 1:
-                                                                    print(
-                                                                        f'\033[1;34mO pokimon {pokimon_encontrado.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    pokimon_encontrado.set_hp(
-                                                                        hpPokimonTreinado
-                                                                    )
-                                                                    personagem.adicionar_pokemon(
-                                                                        pokimon_encontrado
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon encontrado {pokimon_encontrado.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;33mO personagem {personagem.getNome()} ganhou o pokimom {pokimon_encontrado.get_nome()}'
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O PRIMEIRO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(4)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                                if pokimon_para_batalha.get_hp(
-                                                                ) > 1:
-                                                                    print(
-                                                                        f'\033[1;34mO seu pokimon {pokimon_para_batalha.get_nome()} {reacao_aleatoria_pokimon[random.randint(0 , 3)]} e continua vivo!\n'
-                                                                    )
-                                                                else:
-                                                                    print(
-                                                                        f'\033[1;31mO pokemon {pokimon_para_batalha.get_nome()} morreu!'
-                                                                    )
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu o pokimom {pokimon_para_batalha.get_nome()}'
-                                                                    )
-                                                                    vidaPers = personagem.getVida(
-                                                                    ) - 1
-                                                                    personagem.setVida(
-                                                                        vidaPers)
-                                                                    print(
-                                                                        f'\033[1;31mO personagem {personagem.getNome()} perdeu 1 vida!'
-                                                                    )
-                                                                    personagem.remover_pokemon(
-                                                                        pokimon_para_batalha
-                                                                    )
-    ####################################RESLTADO DE BATALHA COM O PRIMEIRO POKIMON LISTA COM 2########################################################
-                                                                    time.sleep(3)
-                                                                    lutando = 10
-                                                                    telaDeBatalha = 10
-                                                                    inicioGame = 1
-                                                            elif escolha_personagem == 2:
-                                                                print(
-                                                                    '\033[1;31mVocê correu da batalha!'
-                                                                )
-                                                                lutando = 1
-                                            else:
-                                                print('\033[1;31mVocê correu da batalha!')
-                                                time.sleep(2)
-                                                lutando = 10
-                                                telaDeBatalha = 10
-                                                inicioGame = 1
-                                        else:
-                                            print('\033[1;31mVocê correu da batalha!')
-                                            time.sleep(2)
-                                            lutando = 10
-                                            telaDeBatalha = 10
-                                            inicioGame = 1
-###########################POKEMONS TREINADOS Segunda batalha###############################################
-            
-            elif x == 2:
-                ###########################TREINAMENTO#######################################################
-                inicioGame = 3
-                while inicioGame == 3:
-                    if personagem.getDinheiro() < 50:
-                        print(
-                            f'\033[1;31mVocê não possui dinheiro suficiente: {personagem.getDinheiro()} '
-                        )
-                        time.sleep(2)
-                        inicioGame = 1
-                    else:
-                        #tela de treinamento
-                        if len(personagem.pokemons) > 1:
-                            #personagem com 2 pokimons
-                            print('\033[1;33mBem vindo ao Treinamento!\n')
-                            print('\033[1;34mSelecione um pokimom para ser treinado: \n')
-                            selecaoPokimon = int(
-                                input(
-                                    f'\033[1;34m1 - {personagem.pokemons[0].get_nome()}\n2 - {personagem.pokemons[1].get_nome()}\nResposta: '
-                                ))
-                            utils.clear_screen()
-                            if selecaoPokimon == 1:
-                                pokimonSelecionado = personagem.pokemons[0]
-                                print(
-                                    f'\033[1;34mVocê selecionu o pokimon {pokimonSelecionado.get_nome()}: '
-                                )
-                                print(
-                                    f'\033[1;37mStatus do pokimom:\nNome: {pokimonSelecionado.get_nome()} HP: {pokimonSelecionado.get_hp()} Ataque: {pokimonSelecionado.get_ataque()} Defesa: {pokimonSelecionado.get_defesa()}'
-                                )
-                                confirmar = int(
-                                    input(
-                                        '\033[1;32mVocê deseja confirmar o treinamento?\n1 - Sim\n2 - Não\nResposta: '
-                                    ))
-                                utils.clear_screen()
-                                if confirmar == 1:
-                                    pokimonSelecionadoTreinado = PokimonTreinado(
-                                        pokimonSelecionado.get_nome(),
-                                        pokimonSelecionado.get_hp(),
-                                        pokimonSelecionado.get_ataque(),
-                                        pokimonSelecionado.get_defesa(), 10)
-                                    pokimonSelecionadoTreinado.set_hp(70)    
-                                    personagem.remover_pokemon(pokimonSelecionado)
-                                    personagem.adicionar_pokemon(
-                                        pokimonSelecionadoTreinado)
-                                    print(
-                                        f'\033[1;37mO status do seu pokimon agora é:\nNome: {pokimonSelecionadoTreinado.get_nome()}\nHP: {pokimonSelecionadoTreinado.get_hp()}\nAtaque: {pokimonSelecionadoTreinado.get_ataque()}\nDefesa: {pokimonSelecionadoTreinado.get_defesa()}'
-                                    )
-                                    x = personagem.getDinheiro() - 50
-                                    personagem.setDinheiro(x)
-                                    inicioGame = 1
-                                elif confirmar == 2:
-                                    inicioGame = 1
-                                elif personagem.getDinheiro < 50:
-                                    print(
-                                        f'\033[1;31mSeu personagem não possui dinheiro suficiente: {personagem.getDinheiro()}'
-                                    )
-                                    inicioGame = 1
-                            elif selecaoPokimon == 2:
-                                pokimonSelecionado = personagem.pokemons[1]
-                                print(
-                                    f'\033[1;34mVocê selecionou o pokimon {pokimonSelecionado.get_nome()}: '
-                                )
-                                print(
-                                    f'\033[1;37mStatus do pokimom:\nNome: {pokimonSelecionado.get_nome()} HP: {pokimonSelecionado.get_hp()} Ataque: {pokimonSelecionado.get_ataque()} Defesa: {pokimonSelecionado.get_defesa()}'
-                                )
-                                confirmar = int(
-                                    input(
-                                        '\033[1;32mVocê deseja confirmar o treinamento?\n1 - Sim\n2 - Não\nResposta: '
-                                    ))
-                                utils.clear_screen()
-                                if confirmar == 1:
-                                    pokimonSelecionadoTreinado = PokimonTreinado(
-                                        pokimonSelecionado.get_nome(),
-                                        pokimonSelecionado.get_hp(),
-                                        pokimonSelecionado.get_ataque(),
-                                        pokimonSelecionado.get_defesa(), 10)
-                                    personagem.remover_pokemon(pokimonSelecionado)
-                                    pokimonSelecionado.set_hp(70)    
-                                    personagem.adicionar_pokemon(
-                                        pokimonSelecionadoTreinado)
-                                    print(
-                                        f'\033[1;37mO status do seu pokimon agora é:\nNome: {pokimonSelecionadoTreinado.get_nome()}\nHP: {pokimonSelecionadoTreinado.get_hp()}\nAtaque: {pokimonSelecionadoTreinado.get_ataque()}\nDefesa: {pokimonSelecionadoTreinado.get_defesa()}'
-                                    )
-                                    x = personagem.getDinheiro() - 50
-                                    personagem.setDinheiro(x)
-                                    inicioGame = 1
-                                elif confirmar == 2:
-                                    inicioGame = 1
-                                elif personagem.getDinheiro() < 50:
-                                    print(
-                                        f'\033[1;31mSeu personagem não possui dinheiro suficiente: {personagem.getDinheiro()}'
-                                    )
-                                    inicioGame = 1
-                        elif len(personagem.pokemons) == 1:
-                            #personagem com 1 pokimons
-                            print('\033[1;33mBem vindo ao Treinamento')
-                            print('\033[1;34mSelecione um pokimom para ser treinado')
-                            selecaoPokimon = int(
-                                input(
-                                    f'\033[1;34m1 - {personagem.pokemons[0].get_nome()}\nResposta: '
-                                ))
-                            utils.clear_screen()
-                            if selecaoPokimon == 1:
-                                pokimonSelecionado = personagem.pokemons[0]
-                                print(
-                                    f'\033[1;34mVocê selecionu o pokimon {pokimonSelecionado.get_nome()}: '
-                                )
-                                print(
-                                    f'\033[1;37mStatus do pokimom:\nNome: {pokimonSelecionado.get_nome()} HP: {pokimonSelecionado.get_hp()} Ataque: {pokimonSelecionado.get_ataque()} Defesa: {pokimonSelecionado.get_defesa()}'
-                                )
-                                confirmar = int(
-                                    input(
-                                        '\033[1;32mVocê deseja confirmar o treinamento?\n1 - Sim\n2 - Não\nResposta: '
-                                    ))
-                                utils.clear_screen()
-                                if confirmar == 1:
-                                    pokimonSelecionadoTreinado = PokimonTreinado(
-                                        pokimonSelecionado.get_nome(),
-                                        pokimonSelecionado.get_hp(),
-                                        pokimonSelecionado.get_ataque(),
-                                        pokimonSelecionado.get_defesa(), 10)
-                                    personagem.remover_pokemon(pokimonSelecionado)
-                                    pokimonSelecionadoTreinado.set_hp(70)
-                                    personagem.adicionar_pokemon(
-                                        pokimonSelecionadoTreinado)
-                                    print(
-                                        f'\033[1;37mO status do seu pokimon agora é:\nNome: {pokimonSelecionadoTreinado.get_nome()}\nHP: {pokimonSelecionadoTreinado.get_hp()}\nAtaque: {pokimonSelecionadoTreinado.get_ataque()}\nDefesa: {pokimonSelecionadoTreinado.get_defesa()}'
-                                    )
-                                    x = personagem.getDinheiro() - 50
-                                    personagem.setDinheiro(x)
-                                    inicioGame = 1
-                                elif confirmar == 2:
-                                    inicioGame = 1
-                                elif personagem.getDinheiro() < 50:
-                                    print(
-                                        f'\033[1;31mSeu personagem não possui dinheiro suficiente: {personagem.getDinheiro()}'
-                                    )
-                                    inicioGame = 1
-                        else:
-                            print('\033[1;31mVocê não possui pokimons para ser treinados')
-                            inicioGame = 1
-            elif x == 3:
-                ###########################DESCANSAR#######################################################
-                inicioGame = 4
-                while inicioGame == 4:
-                    if personagem.getDinheiro() < 50:
-                        print(
-                            f'\033[1;31mVocê não possui dinheiro suficiente: {personagem.getDinheiro()} '
-                        )
-                        time.sleep(2)
-                        inicioGame = 1
-                    elif len(personagem.pokemons) == 0:
-                        print(f'\033[1;31mVocê não possui pokimons!')
-                        time.sleep(2)
-                        inicioGame = 1
-                    else:
-                        if len(personagem.pokemons) > 1:
-                            pokimon_escolhido = int(
-                                input(
-                                    f'\033[1;34mEscolha um de seus pokimons\nPokimon 1 - {personagem.pokemons[0].get_nome()} HP:{personagem.pokemons[0].get_hp()} Ataque:{personagem.pokemons[0].get_ataque()} Defesa:{personagem.pokemons[0].get_defesa()}\nPokimon 2 - {personagem.pokemons[1].get_nome()} HP:{personagem.pokemons[1].get_hp()} Ataque:{personagem.pokemons[1].get_ataque()} Defesa:{personagem.pokemons[1].get_defesa()}\n'
-                                ))
-                            if pokimon_escolhido == 1:
-                                x = personagem.getDinheiro() - 50
-                                personagem.setDinheiro(x)
-                                personagem.pokemons[0].set_hp(70)
-                                print('\033[1;33mSeu pokimon agora possui 70 de hp')
-                                time.sleep(2)
-                                inicioGame = 1
-                            elif pokimon_escolhido == 2:
-                                x = personagem.getDinheiro() - 50
-                                personagem.setDinheiro(x)
-                                personagem.pokemons[1].set_hp(70)
-                                print('\033[1;33mSeu pokimon agora possui 70 de hp')
-                                time.sleep(2)
-                                inicioGame = 1
-                            else:
-                                print('\033[1;31mOpção invalida')
-                                time.sleep(2)
-                                inicioGame = 1
-                        elif len(personagem.pokemons) == 1:
-                            x = personagem.getDinheiro() - 50
-                            personagem.setDinheiro(x)
-                            personagem.pokemons[0].set_hp(70)
-                            print('\033[1;33mSeu pokimon agora possui 70 de hp')
-                            time.sleep(2)
-                            inicioGame = 1
-                        else:
-                            print('\033[1;31mOpção invalida')
-                            time.sleep(2)
-                            inicioGame = 1
-            elif x == 4:
-                ###########################COMPRAR POKIMONS#######################################################
-                inicioGame = 5
-                pokimon_aleatorio = [charmander, bulbasaur, gyarados, lapras]
-                for v in pokimon_aleatorio:
-                    v.set_hp(50)
-                while inicioGame == 5:
-                    if personagem.getDinheiro() < 100 and len(
-                            personagem.pokemons) > 1:
-                        print(
-                            '\033[1;31mNão é possivel adquirir mais pokimons! \nDinheiro Insuficiente ou você já possui 2 pokinons.'
-                        )
-                        time.sleep(4)
-                        inicioGame = 1
-                    else:
-                        telaDeCompra = 0
-                        while telaDeCompra == 0:
-                            utils.clear_screen()
-                            print('\033[1;33mBem vindo a loja de Pokimons.')
-                            print(
-                                '\033[1;34mPor favor selecione o pokimon que deseja comprar')
-                            pokimon_aleatorio = [
-                                charmander, bulbasaur, gyarados, lapras
-                            ]
-                            cont = 0
-                            for v in pokimon_aleatorio:
-                                cont += 1
-                                print(
-                                    f'\033[1;37m{cont} - Nome: {v.get_nome()} HP: {v.get_hp()} Ataque: {v.get_ataque()} Defesa: {v.get_defesa()}'
-                                )
-                            x = int(input('\033[1;33mResposta: '))
-                            if x == 1:
-                                telaDeCompra = 1
-                                while telaDeCompra == 1:
-                                    print(
-                                        f'\033[1;32mDeseja realmente comprar o pokimon {pokimon_aleatorio[0].get_nome()}'
-                                    )
-                                    print('\033[1;32m1 - Sim / 2 - Não')
-                                    y = int(input('\033[1;32mResposta: '))
-                                    if y == 1:
-                                        utils.clear_screen()
-                                        personagem.setDinheiro(0)
-                                        personagem.adicionar_pokemon(
-                                            pokimon_aleatorio[0])
-                                        print(
-                                            f'\033[1;33mVocê adquiriu o pokimon {pokimon_aleatorio[0].get_nome()}'
-                                        )
-                                        time.sleep(2)
-                                        telaDeCompra = 10
-                                        inicioGame = 1
-                                    else:
-                                        telaDeCompra = 0
-                            elif x == 2:
-                                telaDeCompra = 2
-                                while telaDeCompra == 2:
-                                    print(
-                                        f'\033[1;32mDeseja realmente comprar o pokimon {pokimon_aleatorio[1].get_nome()}'
-                                    )
-                                    print('\033[1;32m1 - Sim / 2 - Não')
-                                    y = int(input('\033[1;32mResposta: '))
-                                    if y == 1:
-                                        utils.clear_screen()
-                                        personagem.setDinheiro(0)
-                                        personagem.adicionar_pokemon(
-                                            pokimon_aleatorio[1])
-                                        print(
-                                            f'\033[1;33mVocê adquiriu o pokimon {pokimon_aleatorio[1].get_nome()}'
-                                        )
-                                        time.sleep(2)
-                                        telaDeCompra = 10
-                                        inicioGame = 1
-                                    else:
-                                        telaDeCompra = 0
-                            elif x == 3:
-                                telaDeCompra = 3
-                                while telaDeCompra == 3:
-                                    print(
-                                        f'\033[1;32mDeseja realmente comprar o pokimon {pokimon_aleatorio[2].get_nome()}'
-                                    )
-                                    print('\033[1;32m1 - Sim / 2 - Não')
-                                    y = int(input('\033[1;32mResposta: '))
-                                    if y == 1:
-                                        utils.clear_screen()
-                                        personagem.setDinheiro(0)
-                                        personagem.adicionar_pokemon(
-                                            pokimon_aleatorio[2])
-                                        print(
-                                            f'\033[1;33mVocê adquiriu o pokimon {pokimon_aleatorio[2].get_nome()}'
-                                        )
-                                        time.sleep(2)
-                                        telaDeCompra = 10
-                                        inicioGame = 1
-                                    else:
-                                        telaDeCompra = 0
-                            elif x == 4:
-                                telaDeCompra = 4
-                                while telaDeCompra == 4:
-                                    print(
-                                        f'\033[1;32mDeseja realmente comprar o pokimon {pokimon_aleatorio[3].get_nome()}'
-                                    )
-                                    print('\033[1;32m1 - Sim / 2 - Não')
-                                    y = int(input('\033[1;32mResposta: '))
-                                    if y == 1:
-                                        utils.clear_screen()
-                                        personagem.setDinheiro(0)
-                                        personagem.adicionar_pokemon(
-                                            pokimon_aleatorio[3])
-                                        print(
-                                            f'\033[1;33mVocê adquiriu o pokimon {pokimon_aleatorio[3].get_nome()}'
-                                        )
-                                        time.sleep(2)
-                                        telaDeCompra = 10
-                                        inicioGame = 1
-                                    else:
-                                        telaDeCompra = 0
-                            else:
-                                print('\033[1;31mOpção Inválida')
-                                time.sleep(2)
-                                telaDeCompra = 10
-                                inicioGame = 1
-            elif x == 5:
-                ###########################VER POKIMONS#######################################################
-                for v in personagem.pokemons:
-                    print(
-                        f'\033[1;35mNome: {v.get_nome()} HP: {v.get_hp()} Ataque: {v.get_ataque()} Defesa: {v.get_defesa()}'
-                    )
+        print('Escolha uma opção:')
+        print('1 - Procurar pokimon (Gasta 25 de Estamina)')
+        print('2 - Treinar pokimon (Gasta 50 de Dinheiro)')
+        print(
+            '3 - Descansar (Gasta 50 de Dinheiro e recupera 70 de HP para 1 Pokimon)'
+        )
+        print('4 - Comprar Pokimom (Gasta 350 de Dinheiro)')
+        print('5 - Ver seus Pokimons')
+        print('6 - Ver participação especial!')
+        print('7 - Ver agradecimento especial!')
+        print('8 - Voltar para o menu de Personagens')
+        print('9 - Sair do Jogo')
+        x = personagem.resposta()
+        if x == 1:
+            if personagem.getEstamina() < 25:
+                print('Seu personagem não possui Stamina suficiente')
                 time.sleep(2)
                 inicioGame = 1
-            elif x == 6:
-                print(output5)
-                time.sleep(6)
+            elif len(personagem.pokemons) <= 0:
+                print('Seu personagem não possui Pokimons suficiente')
+                time.sleep(2)
                 inicioGame = 1
-            elif x == 7:
-                print(output7,output8)
-                print('\033[1;35mAgradecimento especial a nossa querida professora DUDA.')
-                print('\033[1;35mFoi breve mas especial.')
-                time.sleep(8)
-                inicioGame = 1
-
             else:
-                print('\033[1;31mOpção Invalida')
+                telaDeBatalha = 0
+                while telaDeBatalha == 0:
+                    funcionalidades.clear_screen()
+                    print('!!!ATRIBUTOS DO PERSONAGEM!!!')
+                    print(
+                        f'Nome: {personagem.getNome()} Vida: {personagem.getVida()} Estamina: {personagem.getEstamina()} Dinheiro: {personagem.getDinheiro()}'
+                    )
+                    print()
+                    print('---POKIMONS---')
+                    for v in personagem.pokemons:
+                        print(
+                            f'Nome: {v.getNome()} HP: {v.getHp()} Ataque: {v.getAtaque()} Defesa: {v.getDefesa()}'
+                        )
+                    print('---POKIMONS---')
+                    print()
+                    print('!!!BEM VINDO AO MENU DE BATALHA!!!\n')
+                    print('Você deseja procurar pokimons?')
+                    print('1 - Sim\n2 - Não')
+                    x = personagem.resposta()
+                    if x == 1 and personagem.getEstamina() >= 1:
+                        lutando = 0
+                        stamina = personagem.getEstamina() - 25
+                        personagem.setEstamina(stamina)
+                        while lutando == 0:
+                            random.shuffle(pokimonAleatorioSelvagem)
+                            pokimon_encontrado = pokimonAleatorioSelvagem[0]
+                            funcionalidades.clear_screen()
+                            funcionalidades.listaPokimons(personagem)
+                            while lutando == 0:
+                                lutando = 0
+                                funcionalidades.clear_screen()
 
+                                print(
+                                    f'{personagem.getNome()} busca por Pokimons, ao se deparar com um {pokimon_encontrado.getNome()} selvagem, \033[1;31m{funcionalidades.reacaoDosPokimons()}\033[m e vai em sua direção.\n'
+                                )
+                                pokimon_encontrado.getImg()
+                                pokimon_encontrado.getSom().play(1)
+                                print(
+                                    'O que você deseja fazer?\n\033[0;31m1 - Atacar\033[m\n\033[0;92m2 - Correr\n\033[m'
+                                )
+                                escolha_personagem = personagem.resposta()
+                                if escolha_personagem == 1:
+                                    funcionalidades.clear_screen()
+                                    lutando = 2
+                                    while lutando == 2:
+                                        #testar a força para decidir qual pokemom ira ser encontrado
+                                        print('Preare-se para batalha!')
+                                        pokimonEscolhido = personagem.escolhaDePokimons(
+                                        )
+                                        pokimonEncontrado = pokimonAleatorioSelvagem[
+                                            0]
+                                        batalha = 0
+                                        while batalha == 0:
+                                            funcionalidades.clear_screen()
+                                            resultado = funcionalidades.resultadoDeBatalha(
+                                                pokimonEscolhido,
+                                                pokimonEncontrado, personagem)
+                                            if resultado == 1:
+                                                lutando = 3
+                                                batalha = 3
+                                                telaDeBatalha = 5
+                                                inicioGame = 1
+                                                break
+                                            elif resultado == 2:
+                                                lutando = 3
+                                                batalha = 3
+                                                telaDeBatalha = 5
+                                                inicioGame = 1
+                                                break
+                                            elif resultado == 3:
+                                                lutando = 3
+                                                batalha = 3
+                                                telaDeBatalha = 5
+                                                inicioGame = 1
+                                                break
+                                            else:
+                                                print(
+                                                    'Os Pokimons continuan na batalha!'
+                                                )
+                                            print(
+                                                f'Status do Pokimon do personagem {personagem.getNome()} - Nome: {pokimonEscolhido.getNome()} HP: {pokimonEscolhido.getHp()} Ataque: {pokimonEscolhido.getAtaque()} Defesa: {pokimonEscolhido.getDefesa()}'
+                                            )
+                                            print(
+                                                f'Status do Pokimon selvagem - Nome: {pokimonEncontrado.getNome()} HP: {pokimonEncontrado.getHp()} Ataque: {pokimonEncontrado.getAtaque()} Defesa: {pokimonEncontrado.getDefesa()}'
+                                            )
+                                            print(
+                                                f'O Pokimon {pokimonEncontrado.getNome()} {funcionalidades.reacaoDosPokimons()}'
+                                            )
+                                            print(
+                                                'O que você deseja fazer?\n\033[0;31m1 - Atacar\033[m\n\033[0;92m2 - Correr\n\033[m'
+                                            )
+                                            resp = personagem.resposta()
+                                            if resp == 1:
+                                                #Ataque do Pokimom escolhido
+                                                funcionalidades.clear_screen()
+                                                dano = pokimonEscolhido.atacar(
+                                                    pokimonEncontrado)
+                                                recebeDano = pokimonEncontrado.receberDano(
+                                                    pokimonEncontrado, dano)
+                                                print(
+                                                    f'O seu Pokimom {pokimonEscolhido.getNome()} causou {dano} de dano no Pokimon Encontrado {pokimonEncontrado.getNome()}'
+                                                )
+                                                time.sleep(2)
+                                                funcionalidades.clear_screen()
+                                                #Ataque do Pokimom Encontrado
+                                                funcionalidades.clear_screen()
+                                                dano = pokimonEncontrado.atacar(
+                                                    pokimonEscolhido)
+                                                recebeDano = pokimonEscolhido.receberDano(
+                                                    pokimonEscolhido, dano)
+                                                print(
+                                                    f'O Pokimom encontrado {pokimonEncontrado.getNome()} causou {dano} de dano no seu Pokimon {pokimonEscolhido.getNome()}'
+                                                )
+                                                time.sleep(2)
+                                            elif resp == 2:
+                                                funcionalidades.clear_screen()
+                                                print(
+                                                    f'{personagem.getNome()} percebeu que esta fraco e fugiu da batalha.'
+                                                )
+                                                print(
+                                                    f'{personagem.getNome()} perdeu 25 de Stamina'
+                                                )
+                                                time.sleep(2)
+                                                batalha = 1
+                                                lutando = 30
+                                            else:
+                                                funcionalidades.clear_screen()
+                                                print(
+                                                    '\033[0;31mOpção inválida\033[m'
+                                                )
+                                                time.sleep(2)
+                                elif escolha_personagem == 2:
+                                    print(
+                                        f'\033[0;31m{personagem.getNome()} ficou com medo e fugiu da batalha.\033[m'
+                                    )
+                                    time.sleep(2)
+                                    lutando = 1
+                                    inicioGame = 1
+                                    break
+                                else:
+                                    print('\033[0;31mOpção inválida.\033[m')
+                                    time.sleep(2)
 
+                    elif x == 2:
+                        print(
+                            '\033[0;37mVocê decidiu não procurar por pokimons agora.\033[m'
+                        )
+                        time.sleep(2)
+                        lutando = 1
+                        inicioGame = 1
+                        break
+                    elif x == 1 and personagem.getEstamina() <= 0:
+                        print(
+                            '\033[0;31mSeu personagem não possui Stamina suficiente para continuar. Descanse para prosseguir.\033[m'
+                        )
+                        time.sleep(2)
+                    else:
+                        print('\033[0;31mOpção inválida.\033[m')
+                        time.sleep(2)
 
+        elif x == 2:
+            print('Treinar')
+            time.sleep(2)
+        elif x == 3:
+            print('Descansar')
+            telaDescansar = 0
+            while telaDescansar == 0:
+                funcionalidades.clear_screen()
+                print('Ao descanar seu personagem perde 25 de dinheiro.')
+                print('Um de seus Pokimons se recupera totalmente.')
+                print('Desesa realmente descansar?')
+                print('1 - Sim\n2 - Não')
+                x = personagem.resposta()
+                if x == 1:
+                    funcionalidades.clear_screen()
+                    novoDinheiro = personagem.getDinheiro() - 25
+                    novaStamina = personagem.getEstamina() + 25
+                    personagem.setEstamina(novaStamina)
+                    personagem.setDinheiro(novoDinheiro)
+                    pokimonDescansado = 0
+                    pokimonEscolhido = personagem.escolhaDePokimons()
+                    del pokimonAleatorioSelvagem[:]
+                    pokimonAleatorioSelvagem = funcionalidades.instanciaDePokimons()
+                    for v in pokimonAleatorioSelvagem:
+                        if pokimonEscolhido.getNome() == v.getNome():
+                            pokimonDescansado = v
+                    funcionalidades.descansar(pokimonEscolhido,
+                                              pokimonDescansado, personagem)
+                    funcionalidades.clear_screen()
+                    print(
+                        f'O Pokimon {pokimonEscolhido.getNome()} se sente pronto para batalha!'
+                    )
+                    time.sleep(2)
+                    print(f'{personagem.getNome()} dormiu e acordou renovado!')
+                    time.sleep(2)
+                    break
+                elif x == 2:
+                    print('Saindo para o menu principal')
+                    time.sleep(2)
+                    break
+                else:
+                    print('\033[0;31mOpção inválida.\033[m')
+                    time.sleep(2)
+        elif x == 4:
+            
+            if personagem.getDinheiro() < 350:
+                print('\033[0,31mVocê não possui dinheiro suficiente.\033[m')
+                time.sleep(2)
+            else:
+                while True:
+                    if contadorDeCompra < 1:
+                        valorDeCompra = personagem.getDinheiro() - 350
+                        personagem.setDinheiro(valorDeCompra)
+                        funcionalidades.clear_screen()
+                        print('Selecione um Pokimon da lista.')
+                        pokimonsParaCompra = funcionalidades.comprarListaPokimons(pokimonAleatorioSelvagem)
+                        x = personagem.resposta()
+                        funcionalidades.clear_screen()
+                        print('Está funcionalidade so será disponibilizada caso o jogo tenha mais de 100 jogadores.')
+                        print('Será adicionado um pokimon aleatorio.')
+                        print('Mande um email para dfenixweb@gmail.com para mais informações.')
+                        random.shuffle(pokimonAleatorioSelvagem)
+                        pk = pokimonAleatorioSelvagem[1]
+                        personagem.adicionar_pokemon(pk)
+                        print('Aguarde...')
+                        contadorDeCompra += 1
+                        time.sleep(10)
+                        break
+                    else:
+                        print('\033[0,31mNesta versão só é possivel comprar 1 pikimon por partida!\033[m')
+                        time.sleep(2)
+                        break
+        elif x == 5:
+            telaPokimons = 0
+            while telaPokimons == 0:
+                pokimomEscolhido = personagem.escolhaDePokimons()
+                print(
+                    f'Nome: {pokimomEscolhido.getNome()} HP: {pokimomEscolhido.getHp()} Ataque: {pokimomEscolhido.getAtaque()} Defesa: {pokimomEscolhido.getDefesa()}'
+                )
+                pokimomEscolhido.getImg()
+                pokimomEscolhido.getSom().play(1)
+                time.sleep(5)
+                break
+            time.sleep(2)
+        elif x == 6:
+            if len(personagem.pokemons) >= 3:
+                funcionalidades.clear_screen()
+                print(funcImagens.imagePathGustavo)
+                time.sleep(3)
+            else:
+                print(
+                    'Para ver a participação especial seu personagem deve possuir ao menos 3 Pokimons'
+                )
+            time.sleep(2)
+        elif x == 7:
+            if len(personagem.pokemons) >= 4:
+                funcionalidades.clear_screen()
+                print(funcImagens.imagePathDuda)
+                print()
+                print(funcImagens.imagePathCoracao)
+                time.sleep(3)
+            else:
+                print(
+                    'Para ver os agradecimentos especiais seu personagem deve possuir ao menos 4 Pokimons'
+                )
+            time.sleep(2)
+        elif x == 8:
+            telaVoltarMenuPersonagem = 0
+            while telaVoltarMenuPersonagem == 0:
+                funcionalidades.clear_screen()
+                print(
+                    'Tem certeza que deseja voltar para o menu de Personagens? Isso vai apagar seu progresso no jogo!'
+                )
+                print('1 - Sim\n2 - Não')
+                x = personagem.resposta()
+                if x == 1:
+                    print('Voltando ao menu de personagens...')
+                    del pesonagens[:]
+                    del pokimonsPersonagem[:]
+                    del pokimonAleatorioSelvagem[:]
+                    pokimonAleatorioSelvagem = funcionalidades.instanciaDePokimons()
+                    pokimonsPersonagem = funcionalidades.instanciaDePokimons()
+                    pesonagens = funcionalidades.instanciaDePersonagens()
+                    time.sleep(2)
+                    inicioGame = 0
+                    break
+                elif x == 2:
+                    break
+                else:
+                    print('\033[0;31mOpção inválida.\033[m')
+                    time.sleep(2)
+        elif x == 9:
+            telaSairDoJogo = 0
+            while telaSairDoJogo == 0:
+                funcionalidades.clear_screen()
+                print(
+                    'Tem certeza que deseja sair do jogo? Isso vai apagar seu progresso no jogo!'
+                )
+                print('1 - Sim\n2 - Não')
+                x = personagem.resposta()
+                if x == 1:
+                    print('Obrigado por Jogar!')
+                    time.sleep(2)
+                    inicioGame = 30
+                    break
+                elif x == 2:
+                    break
+                else:
+                    print('\033[0;31mOpção inválida.\033[m')
+                    time.sleep(2)
+        else:
+            print('\033[0;31mOpção inválida.\033[m')
+            time.sleep(2)
