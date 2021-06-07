@@ -1,4 +1,6 @@
 import funcImagens
+
+
 class Personagem():
     pokemons = []
 
@@ -21,7 +23,7 @@ class Personagem():
 
     def getEstamina(self):
         return self.__Estamina
-    
+
     def getImg(self):
         return self.__img()
 
@@ -36,7 +38,7 @@ class Personagem():
 
     def setEstamina(self, estamina):
         self.__Estamina = estamina
-    
+
     def setImg(self, img):
         self.__img = img()
 
@@ -65,16 +67,20 @@ class Personagem():
         print('Escolha um de seus Pokimons.')
         for v in self.pokemons:
             count += 1
-            print(f'{count} - Nome: {v.getNome()} HP: {v.getHp()} Ataque: {v.getAtaque()} Defesa: {v.getDefesa()}')
+            print(
+                f'\033[1;37mPOKIMON: {count} -  Nome: {v.getNome()} HP: {v.getHp()} Ataque: {v.getAtaque()} Defesa: {v.getDefesa()}'
+            )
         ok = False
         while True:
             x = str(input('Resposta: '))
             if x.isnumeric():
                 x = int(x)
-                if x -1 > len(self.pokemons) -1:
-                    print('\033[0;31mErro! Não existe Pokimons para o valor digitado.\033[m')
+                if x - 1 > len(self.pokemons) - 1 or x == 0:
+                    print(
+                        '\033[0;31mErro! Não existe Pokimons para o valor digitado.\033[m'
+                    )
                 else:
-                    pokimonEscolhido = self.pokemons[x -1]
+                    pokimonEscolhido = self.pokemons[x - 1]
                     ok = True
                     return pokimonEscolhido
             if ok:
@@ -83,9 +89,6 @@ class Personagem():
                 print('\033[0;31mErro! Digite um número Inteiro Válido.\033[m')
         return x
 
+
 imgAsh = funcImagens.imgPrintAsh
 imgMisy = funcImagens.imgPrintMisty
-
-
-
-

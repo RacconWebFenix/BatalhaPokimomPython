@@ -112,7 +112,7 @@ def condicaoVitoriaDerrota(personagem):
     if personagem.getVida() <= 0:
         #print('Derrota')
         return 0
-    elif len(personagem.pokemons) <= 0 and personagem.getDinheiro() < 1:
+    elif len(personagem.pokemons) <= 0 and personagem.getDinheiro() < 350:
         #print('Derrota')
         return 1
     elif len(personagem.pokemons) >= 5:
